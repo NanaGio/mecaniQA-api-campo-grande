@@ -25,4 +25,23 @@ public class PecaService {
         return repository.findPecaById(idPeca);
     }
 
+    //POST
+    public Peca salvarPeca(Peca peca){
+        return repository.postPeca(peca);
+    }
+
+    //PUT - EU QUERO atualizar os preços de custo/venda e a quantidade de uma Peça existente
+    //PUT PREÇO CUSTO
+    public Peca updatePrecoCusto(Peca peca){
+        return repository.putPecaPrecoCusto();
+    }
+    //PUT PREÇO VENDA
+    public Peca updatePrecoVenda(Peca peca){
+        return repository.putPecaPrecoVenda();
+    }
+    //PUT QUANTIDADE
+    public Peca updateQuantidade(Peca peca){
+        return repository.putQuantidadeEstoque();
+    }
+
 }
