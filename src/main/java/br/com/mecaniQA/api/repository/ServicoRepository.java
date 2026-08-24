@@ -7,13 +7,16 @@ package br.com.mecaniQA.api.repository;
 import br.com.mecaniQA.api.model.Peca;
 import br.com.mecaniQA.api.model.Servico;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ServicoRepository {
     // Criando instância
     private static ServicoRepository INSTANCE;
-    private final List<Servico> banco = new ArrayList<>();
+    private final List<Servico> bancoEmMemoria = new ArrayList<>();
+    private int criarId = 1;
 
     //O construtor é privado evitando que essa classe seja instanciada fora dela.
     private ServicoRepository(){
@@ -28,9 +31,75 @@ public class ServicoRepository {
         return INSTANCE;
     }
 
+    // - - LISTA BRUTA PARA GET ALL
     public List<Servico> findAll(){
-        return new ArrayList<>(banco);
+        return new ArrayList<>(bancoEmMemoria);
     }
+
+    // GET BY ID
+    public Servico findServicoById(Integer idServico){
+        for (Servico servico: this.bancoEmMemoria){
+            if (idServico.equals(servico.getIdServico())){
+                return servico;
+            } else {
+                System.out.println("Id não encontrado");
+            }
+        }
+        return null;
+    }
+
+    // POST
+    public Servico postServico(Servico servico){
+        if (servico.getIdServico() == null){
+            servico.setIdServico(criarId++);
+        }
+        bancoEmMemoria.add(servico);
+        return servico;
+    }
+
+    //PUT - EU QUERO alterar o tempo estimado
+    public Servico putTempoEstimado(){
+        for(Servico servico: this.bancoEmMemoria){
+            if (servico.getIdServico() == null){
+                System.out.println("Peça não encontrada no sistema");
+            } else {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("UPDATE -> Tempo Estimado: ");
+                Integer tempoEstimadoUPDATE = scanner.nextInt();
+                servico.setTempoEstimado(tempoEstimadoUPDATE);
+                return servico;
+            }
+        }
+        return null;
+    }
+
+    //PUT - e o custo tabelado de um Serviço
+    public Servico putCustoTabelo(){
+        for(Servico servico: this.bancoEmMemoria){
+            if (servico.getIdServico() == null){
+                System.out.println("Peça não encontrada no sistema");
+            } else {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("UPDATE -> Custo Tabelado");
+                BigDecimal custoTabeladoUPDATE = scanner.nextBigDecimal();
+                servico.setCustoTabelado(custoTabeladoUPDATE);
+                return servico;
+            }
+        }
+        return null;
+    }
+
+    //DELETE
+    public boolean removerServico(Integer idServico){
+        if (idServico == null){
+            System.out.println("Peça não encontrada no sistema");
+            return false;
+        }
+        return this.bancoEmMemoria.removeIf(servico -> idServico.equals(servico.getIdServico()));
+    }
+
+
+
 }
     //Outros métodos, get ou setters...
 
