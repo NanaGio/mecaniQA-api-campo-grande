@@ -2,6 +2,9 @@ package br.com.mecaniQA.api.repository;
 import br.com.mecaniQA.api.model.Peca;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -61,7 +64,7 @@ public class PecaRepository {
                 System.out.println("Peça não encontrada no sistema");
             } else {
                     Scanner scanner = new Scanner(System.in);
-                    System.out.println("UPDATE -> Preço | Custo: (Escreva apenas números)");
+                    System.out.println("UPDATE -> Preço | Custo: (Escreva em  dígitos)");
                     BigDecimal precoCustoUPDATE = scanner.nextBigDecimal();
                     peca.setPrecoCusto(precoCustoUPDATE);
                     return peca;
@@ -100,15 +103,12 @@ public class PecaRepository {
         return null;
     }
     // DELETE
-    public Peca removerPeca(Integer idPeca){
-        for (Peca peca: this.bancoEmMemoria){
-            if (peca.getIdPeca() == null){
+    public boolean removerPeca(Integer idPeca){
+            if (idPeca == null){
                 System.out.println("Peça não encontrada no sistema");
-            } else {
-                return this.bancoEmMemoria.removeIf(peca -> idPeca.equals(peca.getIdPeca()));
+                return false;
             }
-        }
-        return null;
+            return this.bancoEmMemoria.removeIf(peca -> idPeca.equals(peca.getIdPeca()));
     }
 
 }

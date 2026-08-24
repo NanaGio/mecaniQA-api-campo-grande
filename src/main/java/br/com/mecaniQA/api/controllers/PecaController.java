@@ -1,13 +1,9 @@
 package br.com.mecaniQA.api.controllers;
 import br.com.mecaniQA.api.model.Peca;
-import br.com.mecaniQA.api.repository.PecaRepository;
 import br.com.mecaniQA.api.service.PecaService;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import tools.jackson.databind.ObjectMapper;
+
 import java.util.List;
-import java.util.Map;
-import static br.com.mecaniQA.api.repository.PecaRepository.getInstance;
 
 @RestController
 @RequestMapping("/api/pecas")
@@ -52,9 +48,7 @@ public class PecaController {
     }
     //DELETE
     @DeleteMapping("/api/pecas/deletarPeca/{idPeca}")
-    public Peca deletePeca(Peca peca){
-        return
-    }
+    public boolean deletePeca(Integer idPeca){return pecaService.deletarPeca(idPeca);}
 
 }
 

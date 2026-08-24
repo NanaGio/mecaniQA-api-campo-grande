@@ -1,5 +1,4 @@
 package br.com.mecaniQA.api.service;
-import br.com.mecaniQA.api.controllers.PecaController;
 import br.com.mecaniQA.api.model.Peca;
 import br.com.mecaniQA.api.repository.PecaRepository;
 import java.util.List;
@@ -42,6 +41,10 @@ public class PecaService {
     //PUT QUANTIDADE
     public Peca updateQuantidade(Peca peca){
         return repository.putQuantidadeEstoque();
+    }
+    //DELETE
+    public boolean deletarPeca(Integer idPeca){
+        return repository.removerPeca(idPeca);
     }
 
 }
