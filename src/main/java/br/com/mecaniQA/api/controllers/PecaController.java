@@ -48,7 +48,7 @@ public class PecaController {
     }
     //DELETE
     @DeleteMapping("/api/pecas/deletarPeca/{idPeca}")
-    public boolean deletePeca(Integer idPeca){return pecaService.deletarPeca(idPeca);}
+    public boolean deletePeca(@PathVariable("idPeca") Integer idPeca){return pecaService.deletarPeca(idPeca);}
 
 }
 

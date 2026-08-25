@@ -32,7 +32,7 @@ public class ServicoRepository {
     }
 
     // - - LISTA BRUTA PARA GET ALL
-    public List<Servico> findAll(){
+    public List<Servico> findAllServicos(){
         return new ArrayList<>(bancoEmMemoria);
     }
 
@@ -74,7 +74,7 @@ public class ServicoRepository {
     }
 
     //PUT - e o custo tabelado de um Serviço
-    public Servico putCustoTabelo(){
+    public Servico putCustoTabelado(){
         for(Servico servico: this.bancoEmMemoria){
             if (servico.getIdServico() == null){
                 System.out.println("Peça não encontrada no sistema");
