@@ -1,6 +1,7 @@
 package br.com.mecaniQA.api.controllers;
 import br.com.mecaniQA.api.model.Peca;
 import br.com.mecaniQA.api.service.PecaService;
+import br.com.mecaniQA.api.service.ServicoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,12 +10,8 @@ import java.util.List;
 @RequestMapping("/api/pecas")
 public class PecaController {
 
-    private final PecaService pecaService;
-
     // Isso aqui conta como injeção de dependência? Acho que não já que não é @Autowired
-    public PecaController(PecaService pecaService) {
-        this.pecaService = pecaService;
-    }
+    private final PecaService pecaService = PecaService.getInstance();
     //GET ALL
     @GetMapping("/api/pecas/allPecas")
     public List<Peca> getAllPecas(){

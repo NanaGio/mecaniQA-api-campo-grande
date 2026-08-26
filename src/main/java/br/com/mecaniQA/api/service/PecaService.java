@@ -6,7 +6,19 @@ import java.util.List;
 // Referência: How to create an REST API in Spring boot using Java (Daniel Smidstrup | YTB)
 
 public class PecaService {
+    private static PecaService INSTANCE;
+
     private final PecaRepository repository = PecaRepository.getInstance();
+
+    private PecaService(){
+    }
+
+    public static PecaService getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new PecaService();
+        }
+        return INSTANCE;
+    }
 
     // GET ALL
     public List<Peca> GetAllPecas(){

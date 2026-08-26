@@ -11,11 +11,8 @@ import java.util.List;
 public class ServicoController {
     // A estrutura de rotas deve seguir o padrão RESTful (ex: /api/pecas e /api/servicos)
     // Utilizar os verbos HTTP corretos para cada ação mapeando-os com as anotações do Spring
-    private final ServicoService servicoService;
 
-    public ServicoController(ServicoService servicoService) {
-        this.servicoService = servicoService;
-    }
+    private final ServicoService servicoService = ServicoService.getInstance();
     //GET ALL
     @GetMapping("/api/servicos/allServicos")
     public List<Servico> getAllServicos(){

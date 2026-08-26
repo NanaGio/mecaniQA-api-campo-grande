@@ -7,7 +7,19 @@ import br.com.mecaniQA.api.repository.ServicoRepository;
 import java.util.List;
 
 public class ServicoService {
+    private static ServicoService INSTANCE;
+
     private final ServicoRepository repository = ServicoRepository.getInstance();
+
+    private ServicoService(){
+
+    }
+    public static ServicoService getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new ServicoService();
+        }
+        return INSTANCE;
+    }
 
     //GET ALL
     public List<Servico> GetAllServicos(){
