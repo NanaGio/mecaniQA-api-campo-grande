@@ -16,6 +16,7 @@ public class Peca {
     private Float tamanho;
     private String cor;
     private CategoriaPeca categoriaPeca;
+    private LocalDateTime dataUltimaAtualizacao;
 
     // GET & SET [ idPeca ]
     public Integer getIdPeca() {
@@ -96,4 +97,9 @@ public class Peca {
     public void setCategoriaPeca(CategoriaPeca categoriaPeca) {
         this.categoriaPeca = categoriaPeca;
     }
+
+    //GET & SET [ DataUltimaAtualizacao ]
+    public LocalDateTime getDataUltimaAtualizacao() { return dataUltimaAtualizacao;}
+    public void setDataUltimaAtualizacao(LocalDateTime dataUltimaAtualizacao) {this.dataUltimaAtualizacao = dataUltimaAtualizacao;}
+
 }

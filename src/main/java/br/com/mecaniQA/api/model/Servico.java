@@ -9,6 +9,7 @@ public class Servico {
     private Integer tempoEstimado;
     private BigDecimal custoTabelado;
     private LocalDateTime dataCriacao;
+    private LocalDateTime dataUltimaAtualizacao;
 
     // GET & SET [ idServico ]
     public Integer getIdServico() {
@@ -49,4 +50,8 @@ public class Servico {
     public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
+
+    //GET & SET [ DataUltimaAtualizacao ]
+    public LocalDateTime getDataUltimaAtualizacao() { return dataUltimaAtualizacao;}
+    public void setDataUltimaAtualizacao(LocalDateTime dataUltimaAtualizacao) { this.dataUltimaAtualizacao = dataUltimaAtualizacao;}
 }
