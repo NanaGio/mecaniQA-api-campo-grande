@@ -58,46 +58,31 @@ public class PecaRepository {
 
     //PUT - EU QUERO atualizar os preços de custo/venda e a quantidade de uma Peça existente
     //PUT | PREÇO CUSTO
-    public Peca putPecaPrecoCusto(){
-        for (Peca peca: this.bancoEmMemoria){
-            if (peca.getIdPeca() == null){
-                System.out.println("Peça não encontrada no sistema");
-            } else {
-                    Scanner scanner = new Scanner(System.in);
-                    System.out.println("UPDATE -> Preço | Custo: (Escreva em  dígitos)");
-                    BigDecimal precoCustoUPDATE = scanner.nextBigDecimal();
-                    peca.setPrecoCusto(precoCustoUPDATE);
-                    return peca;
+    public Peca putPecaPrecoCusto(Integer idPeca, BigDecimal novoPrecoCusto){
+        for (Peca peca : this.bancoEmMemoria){
+            if (idPeca.equals(peca.getIdPeca())){
+                peca.setPrecoCusto(novoPrecoCusto);
+                return peca;
             }
         }
         return null;
     }
     //PUT | PREÇO VENDA
-    public Peca putPecaPrecoVenda(){
-        for (Peca peca: this.bancoEmMemoria){
-            if (peca.getIdPeca() == null){
-                System.out.println("Peça não encontrada no sistema");
-            } else {
-                    Scanner scanner = new Scanner(System.in);
-                    System.out.println("UPDATE -> Preço | Venda: (Escreva apenas números");
-                    BigDecimal precoVendaUPDATE = scanner.nextBigDecimal();
-                    peca.setPrecoVenda(precoVendaUPDATE);
-                    return peca;
+    public Peca putPecaPrecoVenda(Integer idPeca, BigDecimal novoPrecoVenda){
+        for (Peca peca : this.bancoEmMemoria){
+            if (idPeca.equals(peca.getIdPeca())){
+                peca.setPrecoVenda(novoPrecoVenda);
+                return peca;
             }
         }
         return null;
     }
     // PUT | QUANTIDADE EM ESTOQUE
-    public Peca putQuantidadeEstoque(){
-        for (Peca peca: this.bancoEmMemoria){
-            if (peca.getIdPeca() == null){
-                System.out.println("Peça não encontrada no sistema");
-            } else {
-                    Scanner scanner = new Scanner(System.in);
-                    System.out.println("UPDATE -> Quantidade em Estoque: (Escreva apenas números");
-                    Integer precoQuantidadeUPDATE = scanner.nextInt();
-                    peca.setQuantidadeEstoque(precoQuantidadeUPDATE);
-                    return peca;
+    public Peca putQuantidadeEstoque(Integer idPeca, Integer novaQuantidadeEstoque){
+        for (Peca peca : this.bancoEmMemoria){
+            if (idPeca.equals(peca.getIdPeca())){
+                peca.setQuantidadeEstoque(novaQuantidadeEstoque);
+                return peca;
             }
         }
         return null;

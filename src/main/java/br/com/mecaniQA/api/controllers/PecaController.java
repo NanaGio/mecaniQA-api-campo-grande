@@ -1,9 +1,9 @@
 package br.com.mecaniQA.api.controllers;
 import br.com.mecaniQA.api.model.Peca;
 import br.com.mecaniQA.api.service.PecaService;
-import br.com.mecaniQA.api.service.ServicoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -13,39 +13,62 @@ public class PecaController {
     // Isso aqui conta como injeção de dependência? Acho que não já que não é @Autowired
     private final PecaService pecaService = PecaService.getInstance();
     //GET ALL
-    @GetMapping("/api/pecas/allPecas")
-    public List<Peca> getAllPecas(){
-        return pecaService.GetAllPecas();
+    @GetMapping("/allPecas")
+    public ResponseEntity<List<Peca>> getAllPecas(){
+        List<Peca> lista = pecaService.GetAllPecas();
+        return ResponseEntity.ok(lista);
     }
     // GET BY ID
-    @GetMapping("/api/pecas/{idPeca}")
-    public Peca GetPecaById(@PathVariable("idPeca") Integer idPeca){
-        return pecaService.getById(idPeca);
+    @GetMapping("/{idPeca}")
+    public ResponseEntity<Object> GetPecaById(@PathVariable("idPeca") Integer idPeca){
+        Peca peca = pecaService.getById(idPeca);
+        if (peca == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(peca);
     }
     //POST
-    @PostMapping("/api/pecas/salvarPeca")
-    public Peca SalvarPeca(Peca peca){
-        return pecaService.salvarPeca(peca);
+    @PostMapping("/salvarPeca")
+    public ResponseEntity<Peca> SalvarPeca(@RequestBody Peca peca){
+        Peca pecaSalva = pecaService.salvarPeca(peca);
+        return ResponseEntity.status(201).body(pecaSalva);
     }
     //PUT -- EU QUERO atualizar os preços de custo/venda e a quantidade de uma Peça existente
     // PUT - PREÇO CUSTO
-    @PutMapping("/api/pecas/updatePrecoCusto/{idPeca}")
-    public Peca updatePecaCusto(Peca peca){
-        return pecaService.updatePrecoCusto(peca);
+    @PutMapping("/updatePrecoCusto/{idPeca}")
+    public ResponseEntity<Peca> updatePecaCusto(@PathVariable("idPeca") Integer idPeca, @RequestBody BigDecimal novoPrecoCusto){
+        Peca pecaAtualizada = pecaService.updatePrecoCusto(idPeca, novoPrecoCusto);
+        if (pecaAtualizada == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(pecaAtualizada);
     }
     // PUT - PREÇO VENDA
-    @PutMapping("/api/pecas/updatePrecoVenda/{idPeca}")
-    public Peca updatePecaVenda(Peca peca){
-        return pecaService.updatePrecoVenda(peca);
+    @PutMapping("/updatePrecoVenda/{idPeca}")
+    public ResponseEntity<Peca> updatePecaVenda(@PathVariable("idPeca") Integer idPeca, @RequestBody BigDecimal novoPrecoVenda){
+        Peca pecaAtualizada = pecaService.updatePrecoVenda(idPeca, novoPrecoVenda);
+        if (pecaAtualizada == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(pecaAtualizada);
     }
     // PUT - QUANTIDADE
-    @PutMapping("/api/pecas/updateQuantidade/{idPeca}")
-    public Peca updateQuantidadeEstoque(Peca peca){
-        return pecaService.updateQuantidade(peca);
+    @PutMapping("/updateQuantidade/{idPeca}")
+    public ResponseEntity<Peca> updateQuantidadeEstoque(@PathVariable("idPeca") Integer idPeca, @RequestBody Integer novaQuantidadeEstoque){
+        Peca pecaAtualizada = pecaService.updateQuantidade(idPeca, novaQuantidadeEstoque);
+        if (pecaAtualizada == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(pecaAtualizada);
     }
     //DELETE
-    @DeleteMapping("/api/pecas/deletarPeca/{idPeca}")
-    public boolean deletePeca(@PathVariable("idPeca") Integer idPeca){return pecaService.deletarPeca(idPeca);}
-
+    @DeleteMapping("/deletarPeca/{idPeca}")
+    public ResponseEntity<Void> deletePeca(@PathVariable("idPeca") Integer idPeca){
+        boolean removido = pecaService.deletarPeca(idPeca);
+        if (!removido){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
+    }
 }
 

@@ -1,6 +1,8 @@
 package br.com.mecaniQA.api.service;
 import br.com.mecaniQA.api.model.Peca;
 import br.com.mecaniQA.api.repository.PecaRepository;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 // Referência: How to create an REST API in Spring boot using Java (Daniel Smidstrup | YTB)
@@ -22,13 +24,7 @@ public class PecaService {
 
     // GET ALL
     public List<Peca> GetAllPecas(){
-        List<Peca> lista = repository.findAllpecas();
-
-        if(lista.isEmpty()){
-            System.out.println("A lista está vazia.");
-        }
-
-        return lista;
+        return repository.findAllpecas();
     }
 
     // GET BY ID
@@ -43,16 +39,16 @@ public class PecaService {
 
     //PUT - EU QUERO atualizar os preços de custo/venda e a quantidade de uma Peça existente
     //PUT PREÇO CUSTO
-    public Peca updatePrecoCusto(Peca peca){
-        return repository.putPecaPrecoCusto();
+    public Peca updatePrecoCusto(Integer idPeca, BigDecimal novoPrecoCusto){
+        return repository.putPecaPrecoCusto(idPeca, novoPrecoCusto);
     }
     //PUT PREÇO VENDA
-    public Peca updatePrecoVenda(Peca peca){
-        return repository.putPecaPrecoVenda();
+    public Peca updatePrecoVenda(Integer idPeca, BigDecimal novoPrecoVenda){
+        return repository.putPecaPrecoVenda(idPeca, novoPrecoVenda);
     }
     //PUT QUANTIDADE
-    public Peca updateQuantidade(Peca peca){
-        return repository.putQuantidadeEstoque();
+    public Peca updateQuantidade(Integer idPeca, Integer novaQuantidadeEstoque){
+        return repository.putQuantidadeEstoque(idPeca, novaQuantidadeEstoque);
     }
     //DELETE
     public boolean deletarPeca(Integer idPeca){
