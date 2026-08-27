@@ -2,8 +2,10 @@ package br.com.mecaniQA.api.controllers;
 
 import br.com.mecaniQA.api.model.Servico;
 import br.com.mecaniQA.api.service.ServicoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -14,33 +16,54 @@ public class ServicoController {
 
     private final ServicoService servicoService = ServicoService.getInstance();
     //GET ALL
-    @GetMapping("/api/servicos/allServicos")
-    public List<Servico> getAllServicos(){
-        return servicoService.GetAllServicos();
+    @GetMapping("/allServicos")
+    public ResponseEntity<List<Servico>> getAllServicos(){
+        List<Servico> lista = servicoService.GetAllServicos();
+        return ResponseEntity.ok(lista);
     }
     //GET BY ID
-    @GetMapping("/api/servico/{idServico}")
-    public Servico GetServicoById(@PathVariable("idServico") Integer idServico){
-        return servicoService.getServicoById(idServico);
+    @GetMapping("/{idServico}")
+    public ResponseEntity<Servico> getServicoById(@PathVariable("idServico") Integer idServico){
+        Servico servico = servicoService.getServicoById(idServico);
+        if (servico == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(servico);
     }
     //POST
-    @PostMapping("/api/servico/salvarPeca")
-    public Servico SalvarServico(Servico servico){
-        return servicoService.salvarServico(servico);
+    @PostMapping("/salvarPeca")
+    public ResponseEntity<Servico> salvarServico(@RequestBody Servico servico){
+        Servico servicoSalvo = servicoService.salvarServico(servico);
+        return ResponseEntity.status(201).body(servicoSalvo);
     }
+
+
     //PUT - TEMPO ESTIMADO
-    @PutMapping("/api/servico/updateTempoEstimado")
-    public Servico updateTempoEstimado(Servico servico){
-        return servicoService.updateTempoEstimado();
+    @PutMapping("/updateTempoEstimado")
+    public ResponseEntity<Servico> updateTempoEstimado(@PathVariable("idServico") Integer idServico, @RequestBody Integer novoTempoEstimado){
+        Servico servicoAtualizado = servicoService.updateTempoEstimado(idServico, novoTempoEstimado);
+        if (servicoAtualizado == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(servicoAtualizado);
     }
+
     //PUT - CUSTO TABELADO
-    @PutMapping("/api/servico/updateCustoTabelado")
-    public Servico updateCustoTabelado(Servico servico){
-        return servicoService.updateCustoTabelado();
+    @PutMapping("/updateCustoTabelado")
+    public ResponseEntity<Servico> updateCustoTabelado(@PathVariable("idServico") Integer idServico, @RequestBody BigDecimal novoCustoTabelado){
+        Servico servicoAtualizado = servicoService.updateCustoTabelado(idServico, novoCustoTabelado);
+        if (servicoAtualizado == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(servicoAtualizado);
     }
     //DELETE
-    @DeleteMapping("/api/servico/deletarServico/{idServico}")
-    public boolean deleteServico(@PathVariable("idServico")Integer idServico){
-        return servicoService.deletarServico(idServico);
+    @DeleteMapping("/{idServico}")
+    public ResponseEntity<Void> deleteServico(@PathVariable("idServico") Integer idServico){
+        boolean removido = servicoService.deletarServico(idServico);
+        if (!removido){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
     }
 }

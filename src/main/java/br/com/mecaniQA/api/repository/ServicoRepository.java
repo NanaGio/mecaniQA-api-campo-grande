@@ -58,37 +58,25 @@ public class ServicoRepository {
     }
 
     //PUT - EU QUERO alterar o tempo estimado
-    public Servico putTempoEstimado(){
-        for(Servico servico: this.bancoEmMemoria){
-            if (servico.getIdServico() == null){
-                System.out.println("Peça não encontrada no sistema");
-            } else {
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("UPDATE -> Tempo Estimado: ");
-                Integer tempoEstimadoUPDATE = scanner.nextInt();
-                servico.setTempoEstimado(tempoEstimadoUPDATE);
+    public Servico putTempoEstimado(Integer idServico, Integer novoTempoEstimado){
+        for (Servico servico : this.bancoEmMemoria){
+            if (idServico.equals(servico.getIdServico())){
+                servico.setTempoEstimado(novoTempoEstimado);
                 return servico;
             }
         }
         return null;
     }
-
     //PUT - e o custo tabelado de um Serviço
-    public Servico putCustoTabelado(){
-        for(Servico servico: this.bancoEmMemoria){
-            if (servico.getIdServico() == null){
-                System.out.println("Peça não encontrada no sistema");
-            } else {
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("UPDATE -> Custo Tabelado");
-                BigDecimal custoTabeladoUPDATE = scanner.nextBigDecimal();
-                servico.setCustoTabelado(custoTabeladoUPDATE);
+    public Servico putCustoTabelado(Integer idServico, BigDecimal novoCustoTabelado){
+        for (Servico servico : this.bancoEmMemoria){
+            if (idServico.equals(servico.getIdServico())){
+                servico.setCustoTabelado(novoCustoTabelado);
                 return servico;
             }
         }
         return null;
     }
-
     //DELETE
     public boolean removerServico(Integer idServico){
         if (idServico == null){

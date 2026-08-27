@@ -4,6 +4,8 @@ import br.com.mecaniQA.api.model.Peca;
 import br.com.mecaniQA.api.model.Servico;
 import br.com.mecaniQA.api.repository.PecaRepository;
 import br.com.mecaniQA.api.repository.ServicoRepository;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ServicoService {
@@ -39,12 +41,12 @@ public class ServicoService {
         return repository.postServico(servico);
     }
     //PUT - tempoEstimado
-    public Servico updateTempoEstimado(){
-        return repository.putTempoEstimado();
+    public Servico updateTempoEstimado(Integer idServico, Integer novoTempoEstimado){
+        return repository.putTempoEstimado(idServico, novoTempoEstimado);
     }
     //PUT - custoTabelado
-    public Servico updateCustoTabelado(){
-        return repository.putCustoTabelado();
+    public Servico updateCustoTabelado(Integer idServico, BigDecimal novoCustoTabelado){
+        return repository.putCustoTabelado(idServico, novoCustoTabelado);
     }
     //DELETE
     public boolean deletarServico(Integer idServico){

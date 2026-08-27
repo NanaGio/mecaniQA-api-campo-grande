@@ -41,7 +41,7 @@ public class PecaRepository {
                 if (idPeca.equals(peca.getIdPeca())){
                     return peca;
                 } else {
-                    System.out.println("Id não encontrado.");
+                    System.out.println("Id não encontrado."); // Para fins de debbug
                 }
             }
         return null;
@@ -90,7 +90,7 @@ public class PecaRepository {
     // DELETE
     public boolean removerPeca(Integer idPeca){
             if (idPeca == null){
-                System.out.println("Peça não encontrada no sistema");
+                System.out.println("Peça não encontrada no sistema"); // Para fins de debbug
                 return false;
             }
             return this.bancoEmMemoria.removeIf(peca -> idPeca.equals(peca.getIdPeca()));
