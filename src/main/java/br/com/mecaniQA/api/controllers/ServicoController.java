@@ -31,7 +31,7 @@ public class ServicoController {
         return ResponseEntity.ok(servico);
     }
     //POST
-    @PostMapping("/salvarPeca")
+    @PostMapping("/salvarServico")
     public ResponseEntity<Servico> salvarServico(@RequestBody Servico servico){
         Servico servicoSalvo = servicoService.salvarServico(servico);
         return ResponseEntity.status(201).body(servicoSalvo);
@@ -39,7 +39,7 @@ public class ServicoController {
 
 
     //PUT - TEMPO ESTIMADO
-    @PutMapping("/updateTempoEstimado")
+    @PutMapping("/updateTempoEstimado/{idServico}")
     public ResponseEntity<Servico> updateTempoEstimado(@PathVariable("idServico") Integer idServico, @RequestBody Integer novoTempoEstimado){
         Servico servicoAtualizado = servicoService.updateTempoEstimado(idServico, novoTempoEstimado);
         if (servicoAtualizado == null){
@@ -49,7 +49,7 @@ public class ServicoController {
     }
 
     //PUT - CUSTO TABELADO
-    @PutMapping("/updateCustoTabelado")
+    @PutMapping("/updateCustoTabelado/{idServico}")
     public ResponseEntity<Servico> updateCustoTabelado(@PathVariable("idServico") Integer idServico, @RequestBody BigDecimal novoCustoTabelado){
         Servico servicoAtualizado = servicoService.updateCustoTabelado(idServico, novoCustoTabelado);
         if (servicoAtualizado == null){
@@ -58,7 +58,7 @@ public class ServicoController {
         return ResponseEntity.ok(servicoAtualizado);
     }
     //DELETE
-    @DeleteMapping("/{idServico}")
+    @DeleteMapping("/deletarServico/{idServico}")
     public ResponseEntity<Void> deleteServico(@PathVariable("idServico") Integer idServico){
         boolean removido = servicoService.deletarServico(idServico);
         if (!removido){
