@@ -9,14 +9,14 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/servicos")
+@RequestMapping("api/servico")
 public class ServicoController {
     // A estrutura de rotas deve seguir o padrão RESTful (ex: /api/pecas e /api/servicos)
     // Utilizar os verbos HTTP corretos para cada ação mapeando-os com as anotações do Spring
 
     private final ServicoService servicoService = ServicoService.getInstance();
     //GET ALL
-    @GetMapping("/allServicos")
+    @GetMapping("/servicos")
     public ResponseEntity<List<Servico>> getAllServicos(){
         List<Servico> lista = servicoService.GetAllServicos();
         return ResponseEntity.ok(lista);

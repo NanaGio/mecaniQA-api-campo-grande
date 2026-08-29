@@ -7,13 +7,13 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/pecas")
+@RequestMapping("/api/peca")
 public class PecaController {
 
     // Isso aqui conta como injeção de dependência? Acho que não já que não é @Autowired
     private final PecaService pecaService = PecaService.getInstance();
     //GET ALL
-    @GetMapping("/allPecas")
+    @GetMapping("/pecas")
     public ResponseEntity<List<Peca>> getAllPecas(){
         List<Peca> lista = pecaService.GetAllPecas();
         return ResponseEntity.ok(lista);
