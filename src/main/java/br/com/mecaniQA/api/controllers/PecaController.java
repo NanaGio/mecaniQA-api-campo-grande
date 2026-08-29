@@ -13,7 +13,7 @@ public class PecaController {
     // Isso aqui conta como injeção de dependência? Acho que não já que não é @Autowired
     private final PecaService pecaService = PecaService.getInstance();
     //GET ALL
-    @GetMapping("/pecas")
+    @GetMapping("/allPecas")
     public ResponseEntity<List<Peca>> getAllPecas(){
         List<Peca> lista = pecaService.GetAllPecas();
         return ResponseEntity.ok(lista);
@@ -28,14 +28,14 @@ public class PecaController {
         return ResponseEntity.ok(peca);
     }
     //POST
-    @PostMapping("/peca")
+    @PostMapping("/salvarPeca")
     public ResponseEntity<Peca> SalvarPeca(@RequestBody Peca peca){
         Peca pecaSalva = pecaService.salvarPeca(peca);
         return ResponseEntity.status(201).body(pecaSalva);
     }
     //PUT -- EU QUERO atualizar os preços de custo/venda e a quantidade de uma Peça existente
     // PUT - PREÇO CUSTO
-    @PutMapping("/peca/{idPeca}")
+    @PutMapping("/updatePrecoCusto/{idPeca}")
     public ResponseEntity<Peca> updatePecaCusto(@PathVariable("idPeca") Integer idPeca, @RequestBody BigDecimal novoPrecoCusto){
         Peca pecaAtualizada = pecaService.updatePrecoCusto(idPeca, novoPrecoCusto);
         if (pecaAtualizada == null){
@@ -44,7 +44,7 @@ public class PecaController {
         return ResponseEntity.ok(pecaAtualizada);
     }
     // PUT - PREÇO VENDA
-    @PutMapping("/peca/{idPeca}")
+    @PutMapping("/updatePrecoVenda/{idPeca}")
     public ResponseEntity<Peca> updatePecaVenda(@PathVariable("idPeca") Integer idPeca, @RequestBody BigDecimal novoPrecoVenda){
         Peca pecaAtualizada = pecaService.updatePrecoVenda(idPeca, novoPrecoVenda);
         if (pecaAtualizada == null){
@@ -53,7 +53,7 @@ public class PecaController {
         return ResponseEntity.ok(pecaAtualizada);
     }
     // PUT - QUANTIDADE
-    @PutMapping("/peca/{idPeca}")
+    @PutMapping("/updateQuantidade/{idPeca}")
     public ResponseEntity<Peca> updateQuantidadeEstoque(@PathVariable("idPeca") Integer idPeca, @RequestBody Integer novaQuantidadeEstoque){
         Peca pecaAtualizada = pecaService.updateQuantidade(idPeca, novaQuantidadeEstoque);
         if (pecaAtualizada == null){
@@ -62,7 +62,7 @@ public class PecaController {
         return ResponseEntity.ok(pecaAtualizada);
     }
     //DELETE
-    @DeleteMapping("/peca/{idPeca}")
+    @DeleteMapping("/deletarPeca/{idPeca}")
     public ResponseEntity<Void> deletePeca(@PathVariable("idPeca") Integer idPeca){
         boolean removido = pecaService.deletarPeca(idPeca);
         if (!removido){
