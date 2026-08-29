@@ -12,10 +12,13 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:8080/api/pecas/allPecas",
+          "raw": "http://127.0.0.1:8080/api/pecas/allPecas",
           "protocol": "http",
           "host": [
-            "localhost"
+            "127",
+            "0",
+            "0",
+            "1"
           ],
           "port": "8080",
           "path": [
@@ -33,10 +36,13 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:8080/api/pecas/1",
+          "raw": "http://127.0.0.1:8080/api/pecas/1",
           "protocol": "http",
           "host": [
-            "localhost"
+            "127",
+            "0",
+            "0",
+            "1"
           ],
           "port": "8080",
           "path": [
@@ -63,10 +69,13 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8080/api/pecas/salvarPeca",
+          "raw": "http://127.0.0.1:8080/api/pecas/salvarPeca",
           "protocol": "http",
           "host": [
-            "localhost"
+            "127",
+            "0",
+            "0",
+            "1"
           ],
           "port": "8080",
           "path": [
@@ -93,10 +102,13 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8080/api/pecas/updatePrecoCusto/1",
+          "raw": "http://127.0.0.1:8080/api/pecas/updatePrecoCusto/1",
           "protocol": "http",
           "host": [
-            "localhost"
+            "127",
+            "0",
+            "0",
+            "1"
           ],
           "port": "8080",
           "path": [
@@ -110,15 +122,38 @@
       "response": []
     },
     {
+      "name": "PUT PEÇA 2",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
       "name": "DELETE PEÇA",
       "request": {
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://localhost:8080/api/pecas/deletarPeca/3",
+          "raw": "http://127.0.0.1:8080/api/pecas/deletarPeca/3",
           "protocol": "http",
           "host": [
-            "localhost"
+            "127",
+            "0",
+            "0",
+            "1"
           ],
           "port": "8080",
           "path": [
@@ -168,6 +203,40 @@
       "request": {
         "method": "DELETE",
         "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "PUT 2",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "2.00",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8081/api/servico/updateCustoTabelado/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "servico",
+            "updateCustoTabelado",
+            "1"
+          ]
+        }
       },
       "response": []
     }
