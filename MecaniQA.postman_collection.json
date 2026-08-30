@@ -12,19 +12,16 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:8080/api/pecas/allPecas",
+          "raw": "http://localhost:8081/api/peca/pecas",
           "protocol": "http",
           "host": [
-            "127",
-            "0",
-            "0",
-            "1"
+            "localhost"
           ],
-          "port": "8080",
+          "port": "8081",
           "path": [
             "api",
-            "pecas",
-            "allPecas"
+            "peca",
+            "pecas"
           ]
         }
       },
@@ -36,19 +33,16 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:8080/api/pecas/1",
+          "raw": "http://localhost:8081/api/peca/9",
           "protocol": "http",
           "host": [
-            "127",
-            "0",
-            "0",
-            "1"
+            "localhost"
           ],
-          "port": "8080",
+          "port": "8081",
           "path": [
             "api",
-            "pecas",
-            "1"
+            "peca",
+            "9"
           ]
         }
       },
@@ -61,7 +55,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"codigoDeBarras\": \"7891234567890\",\r\n  \"fornecedor\": \"Auto Peças Silva\",\r\n  \"quantidadeEstoque\": 50,\r\n  \"precoCusto\": 25.90,\r\n  \"precoVenda\": 49.90,\r\n  \"tamanho\": 10.5,\r\n  \"cor\": \"Preto\",\r\n  \"categoriaPeca\": \"ACESSORIOS\"\r\n}",
+          "raw": "{\r\n        \"categoriaPeca\": \"FREIOS\",\r\n        \"codigoDeBarras\": \"7891234567898\",\r\n        \"cor\": \"Azul\",\r\n        \"dataCadastro\": \"2026-08-27T01:55:00\",\r\n        \"fornecedor\": \"Zara Larsson Peças\",\r\n        \"idPeca\": 9,\r\n        \"precoCusto\": 100.00,\r\n        \"precoVenda\": 50.90,\r\n        \"quantidadeEstoque\": 10,\r\n        \"tamanho\": 5.5\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -69,18 +63,15 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8080/api/pecas/salvarPeca",
+          "raw": "http://localhost:8081/api/peca/salvarPeca",
           "protocol": "http",
           "host": [
-            "127",
-            "0",
-            "0",
-            "1"
+            "localhost"
           ],
-          "port": "8080",
+          "port": "8081",
           "path": [
             "api",
-            "pecas",
+            "peca",
             "salvarPeca"
           ]
         }
@@ -94,7 +85,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "30.00",
+          "raw": "8.00",
           "options": {
             "raw": {
               "language": "json"
@@ -102,20 +93,17 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8080/api/pecas/updatePrecoCusto/1",
+          "raw": "http://localhost:8081/api/peca/updatePrecoCusto/9",
           "protocol": "http",
           "host": [
-            "127",
-            "0",
-            "0",
-            "1"
+            "localhost"
           ],
-          "port": "8080",
+          "port": "8081",
           "path": [
             "api",
-            "pecas",
+            "peca",
             "updatePrecoCusto",
-            "1"
+            "9"
           ]
         }
       },
@@ -128,7 +116,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "",
+          "raw": "11.00",
           "options": {
             "raw": {
               "language": "json"
@@ -136,7 +124,18 @@
           }
         },
         "url": {
-          "raw": ""
+          "raw": "http://localhost:8081/api/peca/updatePrecoCusto/9",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "peca",
+            "updatePrecoCusto",
+            "9"
+          ]
         }
       },
       "response": []
@@ -147,20 +146,17 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:8080/api/pecas/deletarPeca/3",
+          "raw": "http://localhost:8081/api/peca/deletarPeca/9",
           "protocol": "http",
           "host": [
-            "127",
-            "0",
-            "0",
-            "1"
+            "localhost"
           ],
-          "port": "8080",
+          "port": "8081",
           "path": [
             "api",
-            "pecas",
+            "peca",
             "deletarPeca",
-            "3"
+            "9"
           ]
         }
       },
@@ -170,7 +166,20 @@
       "name": "GET ALL SERVIÇOS",
       "request": {
         "method": "GET",
-        "header": []
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/servico/servicos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "servico",
+            "servicos"
+          ]
+        }
       },
       "response": []
     },
@@ -178,7 +187,20 @@
       "name": "GET BY ID",
       "request": {
         "method": "GET",
-        "header": []
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/servico/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "servico",
+            "1"
+          ]
+        }
       },
       "response": []
     },
@@ -186,7 +208,29 @@
       "name": "POST SERVIÇO",
       "request": {
         "method": "POST",
-        "header": []
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nomeServico\": \"Rodas muito legais muito maneiras\",\r\n  \"dataCriacao\": \"2026-08-27T02:11:00\",\r\n  \"tempoEstimado\": 60,\r\n  \"custoTabelado\": 100.00\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/servico/salvarServico",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "servico",
+            "salvarServico"
+          ]
+        }
       },
       "response": []
     },
@@ -194,15 +238,30 @@
       "name": "PUT SERVIÇO",
       "request": {
         "method": "PUT",
-        "header": []
-      },
-      "response": []
-    },
-    {
-      "name": "DELETE SERVIÇO",
-      "request": {
-        "method": "DELETE",
-        "header": []
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n    10.00\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/servico/updateCustoTabelado/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "servico",
+            "updateCustoTabelado",
+            "1"
+          ]
+        }
       },
       "response": []
     },
@@ -213,7 +272,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "2.00",
+          "raw": "1.00",
           "options": {
             "raw": {
               "language": "json"
@@ -221,19 +280,38 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8081/api/servico/updateCustoTabelado/1",
+          "raw": "http://localhost:8081/api/servico/updateCustoTabelado/1",
           "protocol": "http",
           "host": [
-            "127",
-            "0",
-            "0",
-            "1"
+            "localhost"
           ],
           "port": "8081",
           "path": [
             "api",
             "servico",
             "updateCustoTabelado",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE SERVIÇO",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/servico/deletarServico/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "servico",
+            "deletarServico",
             "1"
           ]
         }
