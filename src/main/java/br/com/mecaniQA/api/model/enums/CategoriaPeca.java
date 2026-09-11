@@ -1,4 +1,4 @@
-package br.com.mecaniQA.api.model;
+package br.com.mecaniQA.api.model.enums;
 
 public enum CategoriaPeca {
     MOTOR,
