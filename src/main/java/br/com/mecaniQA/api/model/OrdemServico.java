@@ -6,8 +6,8 @@ public class OrdemServico {
     private Long id;
     private StatusOrdemServico status;
 
-    private static OrdemServico() {
-        novaOrdem =
+    public OrdemServico() {
+
     }
 
     public StatusOrdemServico getStatus() {
@@ -26,16 +26,26 @@ public class OrdemServico {
         this.id = id;
     }
 
-    public static class Builder {
-        private long id;
+    public static class OrdemServicoBuilder { //BUILDER
+        private Long id;
         private StatusOrdemServico status;
 
-        public Builder(long id) {
+        public OrdemServicoBuilder setId(Long id) {
             this.id = id;
+            return this;
         }
 
-        public Builder(StatusOrdemServico status) {
+        public OrdemServicoBuilder setStatus(StatusOrdemServico status) {
             this.status = status;
+            return this;
+        }
+
+        public OrdemServico build(){
+            OrdemServico ordem = new OrdemServico();
+            ordem.id = this.id;
+            ordem.status = this.status;
+            return ordem;
         }
     }
+
 }
