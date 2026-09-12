@@ -6,6 +6,10 @@ public class OrdemServico {
     private Long id;
     private StatusOrdemServico status;
 
+    private static OrdemServico() {
+        novaOrdem =
+    }
+
     public StatusOrdemServico getStatus() {
         return status;
     }
