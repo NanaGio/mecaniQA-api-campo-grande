@@ -21,4 +21,17 @@ public class OrdemServico {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public static class Builder {
+        private long id;
+        private StatusOrdemServico status;
+
+        public Builder(long id) {
+            this.id = id;
+        }
+
+        public Builder(StatusOrdemServico status) {
+            this.status = status;
+        }
+    }
 }
