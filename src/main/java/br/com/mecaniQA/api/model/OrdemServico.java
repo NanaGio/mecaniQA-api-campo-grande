@@ -47,5 +47,4 @@ public class OrdemServico {
             return ordem;
         }
     }
-
 }
