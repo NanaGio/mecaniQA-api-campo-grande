@@ -7,6 +7,7 @@ import br.com.mecaniQA.api.model.Peca;
 //INCOMPLETO
 
 public class PecaMapper {
+    //Pelo o que eu entendi, aqui nos vamos ter a lógica da entrada do usuário (toEntity)
     public static Peca toEntity(PecaDTO dto){
         Peca peca = new Peca();
         peca.setIdPeca(dto.getIdPeca());
@@ -20,5 +21,19 @@ public class PecaMapper {
         return peca;
     }
 
+    public static PecaDTO toDTO(Peca entity){
+        PecaDTO dto = new PecaDTO();
+        dto.setIdPeca(entity.getIdPeca());
+        dto.setCodigoDeBarras(entity.getCodigoDeBarras());
+        dto.setFornecedor(entity.getFornecedor());
+        dto.setTamanho(entity.getTamanho());
+        dto.setCor(entity.getCor());
+        dto.setCategoriaPeca(entity.getCategoriaPeca());
+        dto.setPrecoCusto(entity.getPrecoCusto());
+        dto.setPrecoVenda(entity.getPrecoVenda());
+        return dto;
+    }
+
+    //E aqui seria para "fora", para a API
 
 }

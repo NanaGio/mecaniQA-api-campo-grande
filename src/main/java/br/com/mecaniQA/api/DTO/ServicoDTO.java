@@ -15,6 +15,11 @@ public class ServicoDTO {
         this.custoTabelado = custoTabelado;
     }
 
+    //Construtor criado por que o mapper pediu
+    public ServicoDTO() {
+
+    }
+
     public Integer getIdServico() {
         return idServico;
     }

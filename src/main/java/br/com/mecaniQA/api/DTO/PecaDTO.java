@@ -25,6 +25,11 @@ public class PecaDTO {
         this.precoVenda = precoVenda;
     }
 
+    //Construtor criado por que o mapper pediu
+    public PecaDTO() {
+
+    }
+
     public Integer getIdPeca() {
         return idPeca;
     }
