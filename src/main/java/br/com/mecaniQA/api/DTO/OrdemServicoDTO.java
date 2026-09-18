@@ -11,6 +11,10 @@ public class OrdemServicoDTO {
         this.status = status; //Não sei a causa desse erro, pesquisar sobre.
     }
 
+    public OrdemServicoDTO() {
+
+    }
+
     public Long getId() {
         return id;
     }
