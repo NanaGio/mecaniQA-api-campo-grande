@@ -9,7 +9,7 @@ public class ApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
-		OrdemServico ordemservico = new OrdemServico();
+		// OrdemServico ordemservico = new OrdemServico();
 	}
 
 }

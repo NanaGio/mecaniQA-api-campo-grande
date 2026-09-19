@@ -8,11 +8,10 @@ public class OrdemServicoDTO {
 
     public OrdemServicoDTO(Long id, StatusOrdemServico status){
         this.id = id;
-        this.status = status; //Não sei a causa desse erro, pesquisar sobre.
+        this.status = status;
     }
 
     public OrdemServicoDTO() {
-
     }
 
     public Long getId() {

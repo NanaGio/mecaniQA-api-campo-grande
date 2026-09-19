@@ -25,7 +25,7 @@ public class ServicoRepository {
 
     //Metodo publico para instância. Aqui escolhi incluir o synchronized para evitar a criação de múltiplos, sincronizando com a instância atual.
     public static synchronized ServicoRepository getInstance(){
-        if(INSTANCE == null){
+        if (INSTANCE == null){
             INSTANCE = new ServicoRepository();
         }
         return INSTANCE;
