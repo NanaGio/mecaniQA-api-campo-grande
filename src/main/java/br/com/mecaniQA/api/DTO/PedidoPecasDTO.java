@@ -1,6 +1,5 @@
 package br.com.mecaniQA.api.DTO;
 
-import br.com.mecaniQA.api.model.ItemPedido;
 import br.com.mecaniQA.api.model.Peca;
 import br.com.mecaniQA.api.model.enums.StatusPedidoPecas;
 
@@ -11,9 +10,9 @@ public class PedidoPecasDTO {
     private Long id;
     private Peca peca;
     private StatusPedidoPecas status;
-    private List<ItemPedido> itens = new ArrayList<>();
+    private List<ItemPedidoDTO> itens = new ArrayList<>();
 
-    public PedidoPecasDTO(Long id, Peca peca, StatusPedidoPecas status, List<ItemPedido> itens){
+    public PedidoPecasDTO(Long id, Peca peca, StatusPedidoPecas status, List<ItemPedidoDTO> itens){
         this.id = id;
         this.peca = peca;
         this.status = status;
@@ -28,7 +27,7 @@ public class PedidoPecasDTO {
         this.id = id;
     }
 
-    public Peca getPeca() {
+    public PecaDTO getPeca() {
         return peca;
     }
 
@@ -44,11 +43,11 @@ public class PedidoPecasDTO {
         this.status = status;
     }
 
-    public List<ItemPedido> getItens() {
+    public List<ItemPedidoDTO> getItens() {
         return itens;
     }
 
-    public void setItens(List<ItemPedido> itens) {
+    public void setItens(List<ItemPedidoDTO> itens) {
         this.itens = itens;
     }
 }

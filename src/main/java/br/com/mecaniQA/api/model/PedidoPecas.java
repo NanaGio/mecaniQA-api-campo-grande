@@ -1,5 +1,6 @@
 package br.com.mecaniQA.api.model;
 
+import br.com.mecaniQA.api.DTO.ItemPedidoDTO;
 import br.com.mecaniQA.api.model.enums.StatusPedidoPecas;
 
 import java.util.ArrayList;

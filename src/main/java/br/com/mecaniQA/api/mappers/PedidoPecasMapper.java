@@ -15,14 +15,13 @@ public class PedidoPecasMapper {
     public static PedidoPecas toEntity(PedidoPecasDTO dto){
         PedidoPecas pedido = new PedidoPecas();
         pedido.setId(dto.getId());
-        pedido.setPeca(dto.getPeca());
+        pedido.setPeca(PecaMapper.toEntity(dto.getPeca()));
         pedido.setStatus(dto.getStatus());
 
-        List<ItemPedidoDTO> itens = dto.getItens().stream()
+        List<ItemPedido> itens = dto.getItens().stream()
                 .map(ItemPedidoMapper::toEntity)
                 .collect(Collectors.toList());
         pedido.setItens(itens);
-
         return pedido;
     }
 }
