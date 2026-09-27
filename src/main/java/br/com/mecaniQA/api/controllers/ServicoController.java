@@ -1,63 +1,72 @@
 package br.com.mecaniQA.api.controllers;
 
+import br.com.mecaniQA.api.DTO.ServicoDTO;
+import br.com.mecaniQA.api.mappers.ServicoMapper;
 import br.com.mecaniQA.api.model.Servico;
 import br.com.mecaniQA.api.service.ServicoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/servico")
+@RequestMapping("/api/servico")
 public class ServicoController {
-    // A estrutura de rotas deve seguir o padrão RESTful (ex: /api/pecas e /api/servicos)
-    // Utilizar os verbos HTTP corretos para cada ação mapeando-os com as anotações do Spring
 
     private final ServicoService servicoService = ServicoService.getInstance();
-    //GET ALL
+
+    // GET ALL
     @GetMapping("/servicos")
-    public ResponseEntity<List<Servico>> getAllServicos(){
+    public ResponseEntity<List<ServicoDTO>> getAllServicos(){
         List<Servico> lista = servicoService.GetAllServicos();
-        return ResponseEntity.ok(lista);
+        List<ServicoDTO> dtoList = new ArrayList<>();
+        for (Servico s : lista) {
+            dtoList.add(ServicoMapper.toDTO(s));
+        }
+        return ResponseEntity.ok(dtoList);
     }
-    //GET BY ID
+
+    // GET BY ID
     @GetMapping("/{idServico}")
-    public ResponseEntity<Servico> getServicoById(@PathVariable("idServico") Integer idServico){
+    public ResponseEntity<ServicoDTO> getServicoById(@PathVariable("idServico") Integer idServico){
         Servico servico = servicoService.getServicoById(idServico);
         if (servico == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(servico);
+        return ResponseEntity.ok(ServicoMapper.toDTO(servico));
     }
-    //POST
+
+    // POST
     @PostMapping("/salvarServico")
-    public ResponseEntity<Servico> salvarServico(@RequestBody Servico servico){
+    public ResponseEntity<ServicoDTO> salvarServico(@RequestBody ServicoDTO dto){
+        Servico servico = ServicoMapper.toEntity(dto);
         Servico servicoSalvo = servicoService.salvarServico(servico);
-        return ResponseEntity.status(201).body(servicoSalvo);
+        return ResponseEntity.status(201).body(ServicoMapper.toDTO(servicoSalvo));
     }
 
-
-    //PUT - TEMPO ESTIMADO
+    // PUT - TEMPO ESTIMADO
     @PutMapping("/updateTempoEstimado/{idServico}")
-    public ResponseEntity<Servico> updateTempoEstimado(@PathVariable("idServico") Integer idServico, @RequestBody Integer novoTempoEstimado){
+    public ResponseEntity<ServicoDTO> updateTempoEstimado(@PathVariable("idServico") Integer idServico, @RequestBody Integer novoTempoEstimado){
         Servico servicoAtualizado = servicoService.updateTempoEstimado(idServico, novoTempoEstimado);
         if (servicoAtualizado == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(servicoAtualizado);
+        return ResponseEntity.ok(ServicoMapper.toDTO(servicoAtualizado));
     }
 
-    //PUT - CUSTO TABELADO
+    // PUT - CUSTO TABELADO
     @PutMapping("/updateCustoTabelado/{idServico}")
-    public ResponseEntity<Servico> updateCustoTabelado(@PathVariable("idServico") Integer idServico, @RequestBody BigDecimal novoCustoTabelado){
+    public ResponseEntity<ServicoDTO> updateCustoTabelado(@PathVariable("idServico") Integer idServico, @RequestBody BigDecimal novoCustoTabelado){
         Servico servicoAtualizado = servicoService.updateCustoTabelado(idServico, novoCustoTabelado);
         if (servicoAtualizado == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(servicoAtualizado);
+        return ResponseEntity.ok(ServicoMapper.toDTO(servicoAtualizado));
     }
-    //DELETE
+
+    // DELETE
     @DeleteMapping("/deletarServico/{idServico}")
     public ResponseEntity<Void> deleteServico(@PathVariable("idServico") Integer idServico){
         boolean removido = servicoService.deletarServico(idServico);
