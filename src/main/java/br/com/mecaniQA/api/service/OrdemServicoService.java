@@ -1,8 +1,11 @@
 package br.com.mecaniQA.api.service;
 
 import br.com.mecaniQA.api.model.OrdemServico;
+import br.com.mecaniQA.api.model.Peca;
 import br.com.mecaniQA.api.model.enums.StatusOrdemServico;
 import br.com.mecaniQA.api.repository.OrdemServicoRepository;
+
+import java.util.List;
 
 public class OrdemServicoService {
     private static OrdemServicoService INSTANCE;
@@ -17,6 +20,14 @@ public class OrdemServicoService {
             INSTANCE = new OrdemServicoService();
         }
         return INSTANCE;
+    }
+
+    public List<OrdemServico> GetAllOrdemServico(){
+        return repository.findAllOrdemServico();
+    }
+
+    public OrdemServico getOrdemServicoById(Long id){
+        return repository.findOrdemServicoById(id);
     }
 
     // [POST] US01 - Criar uma nova Ordem de Serviço (OS)
