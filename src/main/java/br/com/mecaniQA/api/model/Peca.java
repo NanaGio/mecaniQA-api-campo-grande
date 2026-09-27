@@ -1,8 +1,9 @@
 package br.com.mecaniQA.api.model;
 
+import br.com.mecaniQA.api.model.enums.CategoriaPeca;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 // TERMINAR MÉTODOS!
 public class Peca {
