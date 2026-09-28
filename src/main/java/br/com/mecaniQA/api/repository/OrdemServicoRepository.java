@@ -1,7 +1,6 @@
 package br.com.mecaniQA.api.repository;
 
 import br.com.mecaniQA.api.model.OrdemServico;
-import br.com.mecaniQA.api.model.Peca;
 import br.com.mecaniQA.api.model.enums.StatusOrdemServico;
 
 import java.util.ArrayList;

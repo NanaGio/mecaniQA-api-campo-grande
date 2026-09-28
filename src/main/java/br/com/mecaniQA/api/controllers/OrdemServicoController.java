@@ -1,12 +1,10 @@
 package br.com.mecaniQA.api.controllers;
 
-
 import br.com.mecaniQA.api.DTO.OrdemServicoDTO;
 import br.com.mecaniQA.api.mappers.OrdemServicoMapper;
 import br.com.mecaniQA.api.model.OrdemServico;
 import br.com.mecaniQA.api.model.enums.StatusOrdemServico;
 import br.com.mecaniQA.api.service.OrdemServicoService;
-import br.com.mecaniQA.api.service.ServicoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/ordemservico")
+@RequestMapping("/api/ordemservico")
 public class OrdemServicoController {
-    // A estrutura de rotas deve seguir o padrão RESTful (ex: /api/pecas e /api/servicos)
-    // Utilizar os verbos HTTP corretos para cada ação mapeando-os com as anotações do Spring
 
     private final OrdemServicoService ordemServicoService = OrdemServicoService.getInstance();
 
@@ -32,9 +28,10 @@ public class OrdemServicoController {
         return ResponseEntity.ok(dtoList);
     }
 
+    // [GET] BY ID
     @GetMapping("/ordemServico/{id}")
     public ResponseEntity<OrdemServicoDTO> getOrdemServicoById(@PathVariable("id") Long id){
-        OrdemServico ordem = OrdemServicoService.getInstance().getOrdemServicoById(id);
+        OrdemServico ordem = ordemServicoService.getOrdemServicoById(id);
 
         if (ordem == null){
             return ResponseEntity.notFound().build();
@@ -42,6 +39,7 @@ public class OrdemServicoController {
 
         return ResponseEntity.ok(OrdemServicoMapper.toDTO(ordem));
     }
+
     // [POST] US01 - Criar uma nova Ordem de Serviço (OS)
     @PostMapping("/salvarOrdemServico")
     public ResponseEntity<OrdemServicoDTO> criarOrdemServico(@RequestBody OrdemServicoDTO dto){
@@ -51,9 +49,9 @@ public class OrdemServicoController {
     }
 
     // [PUT] US02 - Modificar o status da Ordem de Serviço (Aberto, Em Execução, Executado, etc.)
-    @PutMapping("/upadateOrdemServico/{id}")
+    @PutMapping("/updateOrdemServico/{id}")
     public ResponseEntity<OrdemServicoDTO> updateOrdemServicoStatus(@PathVariable("id") Long id, @RequestBody StatusOrdemServico status){
-        OrdemServico ordemServicoAtualizado = OrdemServicoService.getInstance().modificarOrdem(id, status);
+        OrdemServico ordemServicoAtualizado = ordemServicoService.modificarOrdem(id, status);
         if (ordemServicoAtualizado == null){
             return ResponseEntity.notFound().build();
         }

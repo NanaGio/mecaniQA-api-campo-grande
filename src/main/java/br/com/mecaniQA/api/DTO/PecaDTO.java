@@ -8,16 +8,19 @@ public class PecaDTO {
     private Integer idPeca;
     private String codigoDeBarras;
     private String fornecedor;
+    private Integer quantidadeEstoque;
     private Float tamanho;
     private String cor;
     private CategoriaPeca categoriaPeca;
     private BigDecimal precoCusto;
     private BigDecimal precoVenda;
 
-    public PecaDTO(Integer idPeca, String codigoDeBarras, String fornecedor, Float tamanho, String cor, CategoriaPeca categoriaPeca, BigDecimal precoCusto, BigDecimal precoVenda){
+    public PecaDTO(Integer idPeca, String codigoDeBarras, String fornecedor, Integer quantidadeEstoque, Float tamanho,
+                   String cor, CategoriaPeca categoriaPeca, BigDecimal precoCusto, BigDecimal precoVenda){
         this.idPeca = idPeca;
         this.codigoDeBarras = codigoDeBarras;
         this.fornecedor = fornecedor;
+        this.quantidadeEstoque = quantidadeEstoque;
         this.tamanho = tamanho;
         this.cor = cor;
         this.categoriaPeca = categoriaPeca;
@@ -25,7 +28,7 @@ public class PecaDTO {
         this.precoVenda = precoVenda;
     }
 
-    //Construtor criado por que o mapper pediu
+    //Construtor criado porque o mapper pediu
     public PecaDTO() {
 
     }
@@ -52,6 +55,14 @@ public class PecaDTO {
 
     public void setFornecedor(String fornecedor) {
         this.fornecedor = fornecedor;
+    }
+
+    public Integer getQuantidadeEstoque() {
+        return quantidadeEstoque;
+    }
+
+    public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+        this.quantidadeEstoque = quantidadeEstoque;
     }
 
     public Float getTamanho() {
