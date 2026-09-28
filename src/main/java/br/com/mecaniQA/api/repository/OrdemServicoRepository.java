@@ -61,4 +61,9 @@ public class OrdemServicoRepository {
         }
         return null;
     }
+
+    // [DELETE] Remover uma Ordem de Serviço
+    public boolean deletarOrdemServico(Long id) {
+        return bancoEmMemoria.removeIf(os -> id.equals(os.getId()));
+    }
 }

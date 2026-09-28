@@ -8,11 +8,11 @@ import java.util.List;
 
 public class PedidoPecasDTO {
     private Long id;
-    private Peca peca;
+    private PecaDTO peca;
     private StatusPedidoPecas status;
     private List<ItemPedidoDTO> itens = new ArrayList<>();
 
-    public PedidoPecasDTO(Long id, Peca peca, StatusPedidoPecas status, List<ItemPedidoDTO> itens){
+    public PedidoPecasDTO(Long id, PecaDTO peca, StatusPedidoPecas status, List<ItemPedidoDTO> itens){
         this.id = id;
         this.peca = peca;
         this.status = status;
@@ -31,7 +31,7 @@ public class PedidoPecasDTO {
         return peca;
     }
 
-    public void setPeca(Peca peca) {
+    public void setPeca(PecaDTO peca) {
         this.peca = peca;
     }
 

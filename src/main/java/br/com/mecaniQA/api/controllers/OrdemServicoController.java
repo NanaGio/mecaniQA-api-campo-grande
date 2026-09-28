@@ -59,4 +59,16 @@ public class OrdemServicoController {
         }
         return ResponseEntity.ok(OrdemServicoMapper.toDTO(ordemServicoAtualizado));
     }
+
+    //DELETE
+    @DeleteMapping("/deleteOrdemServico/{id}")
+    public ResponseEntity<Void> deleteOrdemServico(@PathVariable("id") Long id){
+        boolean removida = ordemServicoService.deletarOrdem(id);
+
+        if (!removida){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.noContent().build();
+    }
 }

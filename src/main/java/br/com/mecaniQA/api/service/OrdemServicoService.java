@@ -42,4 +42,9 @@ public class OrdemServicoService {
     public OrdemServico modificarOrdem (Long id, StatusOrdemServico novoStatus){
         return repository.modificarStatus(id, novoStatus);
     }
+
+    //DELETE
+    public boolean deletarOrdem(Long id) {
+        return OrdemServicoRepository.getInstance().deletarOrdemServico(id);
+    }
 }
