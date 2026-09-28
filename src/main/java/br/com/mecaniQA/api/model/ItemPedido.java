@@ -2,16 +2,16 @@ package br.com.mecaniQA.api.model;
 
 // Entidade associativa entre Peça e Pedido
 public class ItemPedido {
-    private Long id;
+    private Long idPedido;
     private Peca peca;
     private int quantidade;
 
     public Long getId() {
-        return id;
+        return idPedido;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.idPedido = idPedido;
     }
 
     public Peca getPeca() {

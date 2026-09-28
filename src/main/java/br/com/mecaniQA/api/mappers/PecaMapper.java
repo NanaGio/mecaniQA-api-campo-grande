@@ -3,16 +3,16 @@ package br.com.mecaniQA.api.mappers;
 import br.com.mecaniQA.api.DTO.PecaDTO;
 import br.com.mecaniQA.api.model.Peca;
 
-//Feito na mão sem uso no framework para mapear automaticamente.
-//INCOMPLETO
-
 public class PecaMapper {
-    //Pelo o que eu entendi, aqui nos vamos ter a lógica da entrada do usuário (toEntity)
+    // DTO -> Model
     public static Peca toEntity(PecaDTO dto){
+        if (dto == null) return null;
+
         Peca peca = new Peca();
         peca.setIdPeca(dto.getIdPeca());
         peca.setCodigoDeBarras(dto.getCodigoDeBarras());
         peca.setFornecedor(dto.getFornecedor());
+        peca.setQuantidadeEstoque(dto.getQuantidadeEstoque());
         peca.setTamanho(dto.getTamanho());
         peca.setCor(dto.getCor());
         peca.setCategoriaPeca(dto.getCategoriaPeca());
@@ -21,11 +21,15 @@ public class PecaMapper {
         return peca;
     }
 
+    // Model -> DTO
     public static PecaDTO toDTO(Peca entity){
+        if (entity == null) return null;
+
         PecaDTO dto = new PecaDTO();
         dto.setIdPeca(entity.getIdPeca());
         dto.setCodigoDeBarras(entity.getCodigoDeBarras());
         dto.setFornecedor(entity.getFornecedor());
+        dto.setQuantidadeEstoque(entity.getQuantidadeEstoque());
         dto.setTamanho(entity.getTamanho());
         dto.setCor(entity.getCor());
         dto.setCategoriaPeca(entity.getCategoriaPeca());
@@ -33,7 +37,4 @@ public class PecaMapper {
         dto.setPrecoVenda(entity.getPrecoVenda());
         return dto;
     }
-
-    //E aqui seria para "fora", para a API
-
 }

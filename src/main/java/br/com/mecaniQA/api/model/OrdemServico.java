@@ -4,12 +4,12 @@ import br.com.mecaniQA.api.model.enums.StatusOrdemServico;
 
 // US01
 public class OrdemServico {
-    private Long id;
+    private Long ordemServicoId;
     private StatusOrdemServico status;
 
     // Builder
     private OrdemServico(Builder builder) {
-        this.id = builder.id;
+        this.ordemServicoId = builder.ordemServicoId;
         this.status = builder.status;
     }
 
@@ -20,8 +20,8 @@ public class OrdemServico {
     public void setStatus(StatusOrdemServico status) {
         this.status = status;
     }
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id ;}
+    public Long getId() { return ordemServicoId; }
+    public void setId(Long id) { this.ordemServicoId = id ;}
 
     // Método estático
     public static Builder builder() {
@@ -31,11 +31,11 @@ public class OrdemServico {
     // Classe estática do Builder
     public static class Builder { //BUILDER
         // Atributos
-        private Long id;
+        private Long ordemServicoId;
         private StatusOrdemServico status;
 
         // Métodos setter-like
-        public Builder id(Long id) { this.id = id; return this; }
+        public Builder id(Long id) { this.ordemServicoId = ordemServicoId; return this; }
         public Builder status(StatusOrdemServico status) { this.status = status; return this;}
 
         public OrdemServico build(){

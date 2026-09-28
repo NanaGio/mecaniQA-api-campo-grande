@@ -1,7 +1,6 @@
 package br.com.mecaniQA.api.service;
 
 import br.com.mecaniQA.api.model.OrdemServico;
-import br.com.mecaniQA.api.model.Peca;
 import br.com.mecaniQA.api.model.enums.StatusOrdemServico;
 import br.com.mecaniQA.api.repository.OrdemServicoRepository;
 
@@ -41,5 +40,10 @@ public class OrdemServicoService {
     // [PUT] US02 - Modificar o status da Ordem de Serviço (Aberto, Em Execução, Executado, etc.)
     public OrdemServico modificarOrdem (Long id, StatusOrdemServico novoStatus){
         return repository.modificarStatus(id, novoStatus);
+    }
+
+    //DELETE
+    public boolean deletarOrdem(Long id) {
+        return OrdemServicoRepository.getInstance().deletarOrdemServico(id);
     }
 }

@@ -1,21 +1,18 @@
 package br.com.mecaniQA.api.DTO;
 
-import br.com.mecaniQA.api.model.Peca;
-
-//Na camada DTO, escolhemos apenas atributos que queremos expor, então segui a lógica de selecionar apenas os atributos para expor ao controller.
+// Na camada DTO, expomos os dados necessários para o item do pedido usando PecaDTO
 public class ItemPedidoDTO {
     private Long id;
-    private Peca peca;
+    private PecaDTO peca;
     private int quantidade;
 
-    public ItemPedidoDTO(Long id, Peca peca, int quantidade){
+    public ItemPedidoDTO() {
+    }
+
+    public ItemPedidoDTO(Long id, PecaDTO peca, int quantidade) {
         this.id = id;
         this.peca = peca;
         this.quantidade = quantidade;
-    }
-
-    public ItemPedidoDTO() {
-
     }
 
     public Long getId() {
@@ -24,6 +21,14 @@ public class ItemPedidoDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public PecaDTO getPeca() {
+        return peca;
+    }
+
+    public void setPeca(PecaDTO peca) {
+        this.peca = peca;
     }
 
     public int getQuantidade() {
