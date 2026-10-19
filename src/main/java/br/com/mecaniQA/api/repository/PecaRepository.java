@@ -36,7 +36,7 @@ public class PecaRepository implements Repository<Peca, Integer>{
 
     @Override
     public Peca save(Peca entity) {
-        String sql = "INSERT INTO tb_peca (cod_barras, fornecedor, quant_estoque, preco_custo, preco_venda, tamanho, cor, categoria_peca, preco_venda, tamanho, cor, categoria_peca) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO tb_peca (cod_barras, fornecedor, quant_estoque, preco_custo, preco_venda, tamanho, cor, categoria_peca) VALUES (?,?,?,?,?,?,?,?)";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             fill(ps, entity);
