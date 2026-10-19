@@ -2,6 +2,7 @@ package br.com.mecaniQA.api.controllers;
 import br.com.mecaniQA.api.DTO.PecaDTO;
 import br.com.mecaniQA.api.mappers.PecaMapper;
 import br.com.mecaniQA.api.model.Peca;
+import br.com.mecaniQA.api.repository.PecaRepository;
 import br.com.mecaniQA.api.service.PecaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,11 @@ import java.util.List;
 public class PecaController {
 
     // Isso aqui conta como injeção de dependência? Acho que não já que não é @Autowired
-    private final PecaService pecaService = PecaService.getInstance();
+    private final PecaService pecaService;
+
+    public PecaController(PecaService service){
+        this.pecaService = service;
+    }
 
     //GET ALL
     @GetMapping("/pecas")
@@ -30,7 +35,7 @@ public class PecaController {
     // GET BY ID
     @GetMapping("/{idPeca}")
     public ResponseEntity<PecaDTO> GetPecaById(@PathVariable("idPeca") Integer idPeca){
-        Peca peca = pecaService.getById(idPeca);
+        Peca peca = (Peca) pecaService.getById(idPeca);
         if (peca == null){
             return ResponseEntity.notFound().build();
         }
