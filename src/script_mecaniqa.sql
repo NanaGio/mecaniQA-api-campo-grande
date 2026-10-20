@@ -12,8 +12,8 @@ create table if not exists tb_peca(
     data_cadastro datetime not null default current_timestamp,
     tamanho decimal,
     cor varchar(15),
-    categoria_peca ENUM('CategoriaPeca', 'StatusOrdemServico', 'StatusPedidoPecas'),
-    data_ultima_atualizacao datetime not null default current_timestamp
+    categoria_peca ENUM('MOTOR','SUSPENSAO','FREIOS','ELETRICA','ACESSORIOS'),
+    data_ultima_atualizacao datetime not null default current_timestamp on update current_timestamp
 );
 
 create table if not exists tb_servico(
@@ -27,13 +27,13 @@ create table if not exists tb_servico(
 
 create table if not exists tb_pedido_pecas (
     id_pedido_pecas int PRIMARY KEY,
-    peca_id int FOREIGN KEY,
+    FOREIGN KEY (peca_id) tb_peca(peca_id),
     status_pedido_pecas ENUM('ORCANDO','PENDENTE_PAGAMENTO','PAGO','ENTREGUE')
 );
 
 create table if not exists tb_idem_pedido (
     id_item_pedido int PRIMARY KEY,
-    id_peca int FOREIGN KEY,
+    FOREIGN KEY (peca_id) tb_peca(peca_id),
     quantidade int
 );
 
