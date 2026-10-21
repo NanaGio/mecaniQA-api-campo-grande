@@ -35,7 +35,7 @@ public class PecaController {
     // GET BY ID
     @GetMapping("/{idPeca}")
     public ResponseEntity<PecaDTO> GetPecaById(@PathVariable("idPeca") Integer idPeca){
-        Peca peca = (Peca) pecaService.getById(idPeca);
+        Peca peca = pecaService.getById(idPeca);
         if (peca == null){
             return ResponseEntity.notFound().build();
         }
@@ -93,4 +93,3 @@ public class PecaController {
         return ResponseEntity.noContent().build();
     }
 }
-

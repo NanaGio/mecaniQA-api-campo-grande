@@ -21,11 +21,9 @@ public class PecaService {
     }
 
     // GET BY ID
-    public Object getById(Integer idPeca){
-        if(!repository.existsById(idPeca)){
-            throw new RuntimeException("Peça não encontrada");
-        }
-        return repository.findById(idPeca);
+    public Peca getById(Integer idPeca){
+        return repository.findById(idPeca)
+                .orElseThrow(() -> new RuntimeException("Peça não encontrada"));
     }
 
     //POST
@@ -38,7 +36,7 @@ public class PecaService {
     // PUT - preço de custo
     public Peca updatePrecoCusto(Integer idPeca, BigDecimal novoPrecoCusto) {
         validarPreco(novoPrecoCusto, "Preço de custo");
-        Peca peca = (Peca) getById(idPeca);
+        Peca peca = getById(idPeca);
         peca.setPrecoCusto(novoPrecoCusto);
         return repository.update(peca);
     }
@@ -46,7 +44,7 @@ public class PecaService {
     // PUT - preço de venda
     public Peca updatePrecoVenda(Integer idPeca, BigDecimal novoPrecoVenda) {
         validarPreco(novoPrecoVenda, "Preço de venda");
-        Peca peca = (Peca) getById(idPeca);
+        Peca peca = getById(idPeca);
         peca.setPrecoVenda(novoPrecoVenda);
         return repository.update(peca);
     }
@@ -56,7 +54,7 @@ public class PecaService {
         if (novaQuantidade == null || novaQuantidade < 0) {
             throw new RuntimeException("A quantidade em estoque não pode ser negativa.");
         }
-        Peca peca = (Peca) getById(idPeca);
+        Peca peca = getById(idPeca);
         peca.setQuantidadeEstoque(novaQuantidade);
         return repository.update(peca);
     }
