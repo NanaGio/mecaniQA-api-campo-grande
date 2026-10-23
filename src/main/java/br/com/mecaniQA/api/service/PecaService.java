@@ -36,17 +36,17 @@ public class PecaService {
     // PUT - preço de custo
     public Peca updatePrecoCusto(Integer idPeca, BigDecimal novoPrecoCusto) {
         validarPreco(novoPrecoCusto, "Preço de custo");
-        Peca peca = getById(idPeca);
-        peca.setPrecoCusto(novoPrecoCusto);
-        return repository.update(peca);
+        getById(idPeca);
+        repository.updatePrecoCusto(idPeca, novoPrecoCusto);
+        return getById(idPeca);
     }
 
     // PUT - preço de venda
     public Peca updatePrecoVenda(Integer idPeca, BigDecimal novoPrecoVenda) {
         validarPreco(novoPrecoVenda, "Preço de venda");
-        Peca peca = getById(idPeca);
-        peca.setPrecoVenda(novoPrecoVenda);
-        return repository.update(peca);
+        getById(idPeca);
+        repository.updatePrecoVenda(idPeca, novoPrecoVenda);
+        return getById(idPeca);
     }
 
     // PUT - quantidade em estoque
@@ -54,9 +54,9 @@ public class PecaService {
         if (novaQuantidade == null || novaQuantidade < 0) {
             throw new RuntimeException("A quantidade em estoque não pode ser negativa.");
         }
-        Peca peca = getById(idPeca);
-        peca.setQuantidadeEstoque(novaQuantidade);
-        return repository.update(peca);
+        getById(idPeca);
+        repository.updateQuantidade(idPeca, novaQuantidade);
+        return getById(idPeca);
     }
 
     //DELETE

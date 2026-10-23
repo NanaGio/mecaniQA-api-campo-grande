@@ -4,6 +4,7 @@ import br.com.mecaniQA.api.model.Peca;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,16 +82,48 @@ public class PecaRepository implements Repository<Peca, Integer>{
 
     @Override
     public Peca update(Peca entity) {
-        String sql = "UPDATE tb_peca SET = ?, preco_custo = ?, preco_venda = ?, WHERE peca_id = ?";
+        String sql = "UPDATE tb_peca SET cod_barras = ?, fornecedor = ?, quant_estoque = ?, preco_custo = ?, preco_venda = ?, tamanho = ?, cor = ?, categoria_peca = ? WHERE peca_id = ?";
         try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setBigDecimal(4, entity.getPrecoCusto());
-            ps.setBigDecimal(5, entity.getPrecoVenda());
+            fill(ps, entity);
             ps.setInt(9, entity.getIdPeca());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao atualizar peça.", e);
         }
         return findById(entity.getIdPeca()).orElse(entity);
+    }
+
+    public void updatePrecoCusto(Integer idPeca, BigDecimal precoCusto) {
+        String sql = "UPDATE tb_peca SET preco_custo = ? WHERE peca_id = ?";
+        try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setBigDecimal(1, precoCusto);
+            ps.setInt(2, idPeca);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar preço de custo da peça " + idPeca, e);
+        }
+    }
+
+    public void updatePrecoVenda(Integer idPeca, BigDecimal precoVenda) {
+        String sql = "UPDATE tb_peca SET preco_venda = ? WHERE peca_id = ?";
+        try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setBigDecimal(1, precoVenda);
+            ps.setInt(2, idPeca);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar preço de venda da peça " + idPeca, e);
+        }
+    }
+
+    public void updateQuantidade(Integer idPeca, Integer quantidade) {
+        String sql = "UPDATE tb_peca SET quant_estoque = ? WHERE peca_id = ?";
+        try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, quantidade);
+            ps.setInt(2, idPeca);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar quantidade em estoque da peça " + idPeca, e);
+        }
     }
 
     @Override
