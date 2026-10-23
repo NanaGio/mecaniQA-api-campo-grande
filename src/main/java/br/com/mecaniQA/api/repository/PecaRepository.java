@@ -81,12 +81,10 @@ public class PecaRepository implements Repository<Peca, Integer>{
 
     @Override
     public Peca update(Peca entity) {
-        String sql = "UPDATE tb_peca SET cod_barras = ?, fornecedor = ?, quant_estoque = ?, "
-                + "preco_custo = ?, preco_venda = ?, tamanho = ?, cor = ?, categoria_peca = ? "
-                + "WHERE peca_id = ?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            fill(ps, entity);
+        String sql = "UPDATE tb_peca SET = ?, preco_custo = ?, preco_venda = ?, WHERE peca_id = ?";
+        try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setBigDecimal(4, entity.getPrecoCusto());
+            ps.setBigDecimal(5, entity.getPrecoVenda());
             ps.setInt(9, entity.getIdPeca());
             ps.executeUpdate();
         } catch (SQLException e) {

@@ -3,7 +3,18 @@ package br.com.mecaniQA.api.mappers;
 import br.com.mecaniQA.api.DTO.ServicoDTO;
 import br.com.mecaniQA.api.model.Servico;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class ServicoMapper {
+    public static Servico map(ResultSet resultado) throws SQLException {
+        Servico servico = new Servico();
+        servico.setIdServico(resultado.getInt("servico_id"));
+        servico.setNomeServico(resultado.getString("nome_servico"));
+        servico.setTempoEstimado(resultado.getInt("tempo_estimado"));
+        servico.setCustoTabelado(resultado.getBigDecimal("custo_tabelado"));
+        return servico;
+    }
     public static Servico toEntity(ServicoDTO dto){
         if (dto == null) return null;
 
