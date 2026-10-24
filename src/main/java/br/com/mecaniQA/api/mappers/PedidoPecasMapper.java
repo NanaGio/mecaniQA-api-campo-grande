@@ -3,13 +3,28 @@ package br.com.mecaniQA.api.mappers;
 import br.com.mecaniQA.api.DTO.ItemPedidoDTO;
 import br.com.mecaniQA.api.DTO.PedidoPecasDTO;
 import br.com.mecaniQA.api.model.ItemPedido;
+import br.com.mecaniQA.api.model.Peca;
 import br.com.mecaniQA.api.model.PedidoPecas;
+import br.com.mecaniQA.api.model.enums.StatusPedidoPecas;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PedidoPecasMapper {
+    public static PedidoPecas map(ResultSet resultado, Peca peca, List<ItemPedido> itens) throws SQLException{
+        PedidoPecas pedidoPecas = new PedidoPecas();
+        pedidoPecas.setId(resultado.getLong("id_pedido_pecas"));
+        pedidoPecas.setPeca(peca);
+        String status = resultado.getString("status_pedido_pecas");
+        if (status != null) {
+            pedidoPecas.setStatus(StatusPedidoPecas.valueOf(status));
+        }
+        pedidoPecas.setItens(itens);
+        return pedidoPecas;
+    }
 
     // DTO -> Model
     public static PedidoPecas toEntity(PedidoPecasDTO dto) {

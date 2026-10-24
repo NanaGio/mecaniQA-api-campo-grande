@@ -11,7 +11,7 @@ public class ItemPedido {
     }
 
     public void setId(Long id) {
-        this.idPedido = idPedido;
+        this.idPedido = id;
     }
 
     public Peca getPeca() {

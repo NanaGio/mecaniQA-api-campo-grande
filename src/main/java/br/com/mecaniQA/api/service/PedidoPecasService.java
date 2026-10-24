@@ -4,22 +4,19 @@ import br.com.mecaniQA.api.model.ItemPedido;
 import br.com.mecaniQA.api.model.PedidoPecas;
 import br.com.mecaniQA.api.model.enums.StatusPedidoPecas;
 import br.com.mecaniQA.api.repository.PedidoPecaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class PedidoPecasService {
-    private static PedidoPecasService INSTANCE;
-    private final PedidoPecaRepository repository = PedidoPecaRepository.getInstance();
+    private final PedidoPecaRepository repository;
 
-    private PedidoPecasService() {
+    public PedidoPecasService(PedidoPecaRepository repository) {
+        this.repository = repository;
     }
 
-    public static PedidoPecasService getInstance(){
-        if (INSTANCE == null) {
-            INSTANCE = new PedidoPecasService();
-        }
-        return INSTANCE;
-    }
 
     // GET ALL
     public List<PedidoPecas> getAllPedidoPecas() {
@@ -32,7 +29,7 @@ public class PedidoPecasService {
     }
 
     // GET BY ID
-    public PedidoPecas getPedidoPecasById(Long id) {
+    public Optional<PedidoPecas> getPedidoPecasById(Long id) {
         return repository.findById(id);
     }
 
@@ -41,7 +38,7 @@ public class PedidoPecasService {
         if (pedidoPecas.getStatus() == null) {
             pedidoPecas.setStatus(StatusPedidoPecas.ORCANDO);
         }
-        return repository.postPedidoPecas(pedidoPecas);
+        return repository.save(pedidoPecas);
     }
 
     // US04 - Adicionar peças a um pedido existente. [POST /api/pedidos/{idPedido}/item]

@@ -13,11 +13,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidoPecasController {
-    private final PedidoPecasService pedidoPecasService = PedidoPecasService.getInstance();
+    private final PedidoPecasService pedidoPecasService;
+
+    public PedidoPecasController(PedidoPecasService pedidoPecasService) {
+        this.pedidoPecasService = pedidoPecasService;
+    }
 
     // GET ALL
     @GetMapping("/pedidos")
@@ -33,15 +38,14 @@ public class PedidoPecasController {
     // GET BY ID
     @GetMapping("/{idPedido}")
     public ResponseEntity<PedidoPecasDTO> getPedidoById(@PathVariable("idPedido") Long idPedido) {
-        PedidoPecas pedidoPecas = pedidoPecasService.getPedidoPecasById(idPedido);
-        if (pedidoPecas == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(PedidoPecasMapper.toDTO(pedidoPecas));
+        Optional<PedidoPecas> pedidoPecas = pedidoPecasService.getPedidoPecasById(idPedido);
+        return pedidoPecas
+                .map(pedido -> ResponseEntity.ok(PedidoPecasMapper.toDTO(pedido)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // [POST] US03 - Criar um novo Pedido de Peças
-    @PostMapping
+    @PostMapping("/salvarPedido")
     public ResponseEntity<PedidoPecasDTO> criarPedido(@RequestBody PedidoPecasDTO dto) {
         // Converte DTO para Model
         PedidoPecas novoPedido = PedidoPecasMapper.toEntity(dto);

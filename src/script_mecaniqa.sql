@@ -28,15 +28,17 @@ create table if not exists tb_servico(
     );
 
 create table if not exists tb_pedido_pecas (
-    id_pedido_pecas int PRIMARY KEY,
+    id_pedido_pecas int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     peca_id int,
     FOREIGN KEY (peca_id) references tb_peca(peca_id),
     status_pedido_pecas ENUM('ORCANDO','PENDENTE_PAGAMENTO','PAGO','ENTREGUE')
     );
 
 create table if not exists tb_idem_pedido (
-    id_item_pedido int PRIMARY KEY,
+    id_item_pedido int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_pedido_pecas int NOT NULL,
     peca_id int,
+    FOREIGN KEY (id_pedido_pecas) references tb_pedido_pecas(id_pedido_pecas) ON DELETE CASCADE,
     FOREIGN KEY (peca_id) references tb_peca(peca_id),
     quantidade int
     );
