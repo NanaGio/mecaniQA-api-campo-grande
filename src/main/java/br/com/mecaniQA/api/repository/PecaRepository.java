@@ -21,7 +21,6 @@ public class PecaRepository implements Repository<Peca, Integer>{
 
     public PecaRepository(DataSource dataSource){
         this.dataSource = dataSource;
-
     }
 
     private void fill(PreparedStatement ps, Peca p) throws  SQLException{

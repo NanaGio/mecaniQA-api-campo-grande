@@ -2,67 +2,72 @@ package br.com.mecaniQA.api.repository;
 
 import br.com.mecaniQA.api.model.OrdemServico;
 import br.com.mecaniQA.api.model.enums.StatusOrdemServico;
+import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class OrdemServicoRepository {
-    // Instância única para projeto Singleton
-    private static OrdemServicoRepository INSTANCE;
-    // Banco de dados em memória e auto-incremento de ID
-    private final List<OrdemServico> bancoEmMemoria = new ArrayList<>();
-    private Long criarId = 1L;
+import static java.util.Collections.fill;
 
-    // Construtor privado
-    private OrdemServicoRepository() {
-    }
+@Component
+public class OrdemServicoRepository implements Repository<OrdemServico, Long> {
+    // Substituindo banco em memória
+    private final DataSource dataSource;
 
-    // Ponto de acesso - singleton
-    public static synchronized OrdemServicoRepository getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new OrdemServicoRepository();
-        }
-        return INSTANCE;
-    }
-    //GET ALL
-    public List<OrdemServico> findAllOrdemServico(){
-        return new ArrayList<>(bancoEmMemoria);
-    }
-    //GET BY ID
-    public OrdemServico findOrdemServicoById(Long id){
-        for (OrdemServico ordemServico: this.bancoEmMemoria){
-            if (id.equals(ordemServico.getId())){
-                return ordemServico;
-            } else {
-                System.out.println("Id não encontrado."); // Para fins de debbug
-            }
-        }
-        return null;
+    public OrdemServicoRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     // [POST] US01 - Criar uma nova Ordem de Serviço (OS)
-    public OrdemServico criarServico(OrdemServico os) {
-        if (os.getId() == null) {
-            os.setId(criarId++);
+    @Override
+    public OrdemServico save(OrdemServico entity) {
+        String sql = "INSERT INTO tb_ordem_servico (status_ordem_servico) VALUES (?)";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, entity.getStatus().name());
+            ps.executeUpdate();
+            try (ResultSet keys = ps.getGeneratedKeys()) {
+                if (!keys.next()) {
+                    throw new SQLException("O banco não retornou o ID da ordem de serviço criada.");
+                }
+                entity.setId(keys.getLong(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao salvar ordem de serviço.", e);
         }
-        bancoEmMemoria.add(os);
-        return os;
+        return findById(entity.getId()).orElse(entity);
+    }
+
+    //GET BY ID
+    @Override
+    public Optional<OrdemServico> findById(Long aLong) {
+        return Optional.empty();
+    }
+
+    //GET ALL
+    @Override
+    public List<OrdemServico> findAll() {
+        return List.of();
     }
 
     // [PUT] US02 - Modificar o status da Ordem de Serviço (Aberto, Em Execução, Executado, etc.)
-    public OrdemServico modificarStatus(Long id, StatusOrdemServico novoStatus) {
-        // Substituto do (int i = 0; i < size(); i++)
-        for (OrdemServico os : this.bancoEmMemoria) {
-            if (id.equals(os.getId())) {
-                os.setStatus(novoStatus);
-                return os;
-            }
-        }
+    @Override
+    public OrdemServico update(OrdemServico entity) {
         return null;
     }
 
     // [DELETE] Remover uma Ordem de Serviço
-    public boolean deletarOrdemServico(Long id) {
-        return bancoEmMemoria.removeIf(os -> id.equals(os.getId()));
+    @Override
+    public boolean deleteById(Long aLong) {
+        return false;
     }
+
+    @Override
+    public boolean existsById(Long aLong) {
+        return false;
+    }
+
 }
