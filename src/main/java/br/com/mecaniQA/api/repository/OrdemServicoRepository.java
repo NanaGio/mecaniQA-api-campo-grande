@@ -1,5 +1,6 @@
 package br.com.mecaniQA.api.repository;
 
+import br.com.mecaniQA.api.mappers.OrdemServicoMapper;
 import br.com.mecaniQA.api.model.OrdemServico;
 import br.com.mecaniQA.api.model.enums.StatusOrdemServico;
 import org.springframework.stereotype.Component;
@@ -43,26 +44,60 @@ public class OrdemServicoRepository implements Repository<OrdemServico, Long> {
 
     //GET BY ID
     @Override
-    public Optional<OrdemServico> findById(Long aLong) {
-        return Optional.empty();
+    public Optional<OrdemServico> findById(Long id) {
+        String sql = "SELECT * FROM tb_ordem_servico WHERE ordem_servico_id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? Optional.of(OrdemServicoMapper.map(rs)) : Optional.empty();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar ordem de serviço " + id, e);
+        }
     }
 
     //GET ALL
     @Override
     public List<OrdemServico> findAll() {
-        return List.of();
+        String sql = "SELECT * FROM tb_ordem_servico";
+        List<OrdemServico> lista = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) lista.add(OrdemServicoMapper.map(rs));
+            return lista;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar ordens de serviço.", e);
+        }
     }
 
-    // [PUT] US02 - Modificar o status da Ordem de Serviço (Aberto, Em Execução, Executado, etc.)
+    // [PUT] US02 - Modificar o status da Ordem de Serviço
     @Override
     public OrdemServico update(OrdemServico entity) {
-        return null;
+        String sql = "UPDATE tb_ordem_servico SET status = ? WHERE ordem_servico_id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, entity.getStatus().name());
+            ps.setLong(2, entity.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar ordem de serviço.", e);
+        }
+        return findById(entity.getId()).orElse(entity);
     }
 
     // [DELETE] Remover uma Ordem de Serviço
     @Override
-    public boolean deleteById(Long aLong) {
-        return false;
+    public boolean deleteById(Long id) {
+        String sql = "DELETE FROM tb_ordem_servico WHERE ordem_servico_id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar ordem de serviço " + id, e);
+        }
     }
 
     @Override

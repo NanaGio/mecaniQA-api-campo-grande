@@ -8,7 +8,6 @@ import java.util.List;
 
 public class PedidoPecas {
     private Long id;
-    private Peca peca;
     private StatusPedidoPecas status;
     private List<ItemPedido> itens = new ArrayList<>();
 
@@ -18,14 +17,6 @@ public class PedidoPecas {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Peca getPeca() {
-        return peca;
-    }
-
-    public void setPeca(Peca peca) {
-        this.peca = peca;
     }
 
     public StatusPedidoPecas getStatus() {

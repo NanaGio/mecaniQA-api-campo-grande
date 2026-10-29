@@ -17,7 +17,6 @@ public class PedidoPecasMapper {
     public static PedidoPecas map(ResultSet resultado, Peca peca, List<ItemPedido> itens) throws SQLException{
         PedidoPecas pedidoPecas = new PedidoPecas();
         pedidoPecas.setId(resultado.getLong("id_pedido_pecas"));
-        pedidoPecas.setPeca(peca);
         String status = resultado.getString("status_pedido_pecas");
         if (status != null) {
             pedidoPecas.setStatus(StatusPedidoPecas.valueOf(status));
@@ -32,7 +31,6 @@ public class PedidoPecasMapper {
 
         PedidoPecas pedido = new PedidoPecas();
         pedido.setId(dto.getId());
-        pedido.setPeca(PecaMapper.toEntity(dto.getPeca()));
         pedido.setStatus(dto.getStatus());
 
         if (dto.getItens() != null) {
@@ -53,7 +51,6 @@ public class PedidoPecasMapper {
 
         PedidoPecasDTO dto = new PedidoPecasDTO();
         dto.setId(entity.getId());
-        dto.setPeca(PecaMapper.toDTO(entity.getPeca()));
         dto.setStatus(entity.getStatus());
 
         if (entity.getItens() != null) {

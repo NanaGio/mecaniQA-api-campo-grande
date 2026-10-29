@@ -19,9 +19,8 @@ import java.util.Optional;
 
 @Component
 public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
-    private static final String PEDIDO_SELECT = "SELECT pp.id_pedido_pecas, pp.status_pedido_pecas, " +
-            "pp.peca_id AS pedido_peca_id, p.* " +
-            "FROM tb_pedido_pecas pp LEFT JOIN tb_peca p ON p.peca_id = pp.peca_id ";
+    private static final String PEDIDO_SELECT =
+            "SELECT pp.id_pedido_pecas, pp.status_pedido_pecas FROM tb_pedido_pecas pp ";
 
     private final DataSource dataSource;
 
@@ -30,20 +29,16 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
     }
 
     private void fill(PreparedStatement ps, PedidoPecas pedido) throws SQLException {
-        if (pedido == null || pedido.getPeca() == null || pedido.getPeca().getIdPeca() == null) {
-            throw new IllegalArgumentException("O pedido deve ter uma peça associada.");
-        }
-        ps.setInt(1, pedido.getPeca().getIdPeca());
         if (pedido.getStatus() == null) {
-            ps.setNull(2, Types.VARCHAR);
+            ps.setNull(1, Types.VARCHAR);
         } else {
-            ps.setString(2, pedido.getStatus().name());
+            ps.setString(1, pedido.getStatus().name());
         }
     }
 
     @Override
     public PedidoPecas save(PedidoPecas pedido) {
-        String sql = "INSERT INTO tb_pedido_pecas (peca_id, status_pedido_pecas) VALUES (?, ?)";
+        String sql = "INSERT INTO tb_pedido_pecas (status_pedido_pecas) VALUES (?)";
         try (Connection conn = dataSource.getConnection()) {
             conn.setAutoCommit(false);
             try {
@@ -105,9 +100,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
                 pedido = new PedidoPecas();
                 pedido.setId(rs.getLong("id_pedido_pecas"));
                 pedido.setStatus(toStatus(rs.getString("status_pedido_pecas")));
-                if (rs.getObject("pedido_peca_id") != null) {
-                    pedido.setPeca(PecaMapper.map(rs));
-                }
+
             }
         }
         pedido.setItens(readItems(conn, id));
@@ -171,14 +164,14 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
 
     @Override
     public PedidoPecas update(PedidoPecas pedido) {
-        String sql = "UPDATE tb_pedido_pecas SET peca_id = ?, status_pedido_pecas = ? WHERE id_pedido_pecas = ?";
+        String sql = "UPDATE tb_pedido_pecas SET status_pedido_pecas = ? WHERE id_pedido_pecas = ?";
         try (Connection conn = dataSource.getConnection()) {
             conn.setAutoCommit(false);
             try {
                 int linhasAfetadas;
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     fill(ps, pedido);
-                    ps.setLong(3, pedido.getId());
+                    ps.setLong(2, pedido.getId());
                     linhasAfetadas = ps.executeUpdate();
                 }
                 if (linhasAfetadas == 0) {

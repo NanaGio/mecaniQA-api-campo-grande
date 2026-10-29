@@ -15,7 +15,12 @@ import java.util.List;
 @RequestMapping("/api/ordemservico")
 public class OrdemServicoController {
 
-    private final OrdemServicoService ordemServicoService = OrdemServicoService.getInstance();
+    private final OrdemServicoService ordemServicoService;
+
+    public OrdemServicoController(OrdemServicoService ordemServicoService) {
+        this.ordemServicoService = ordemServicoService;
+    }
+
 
     // [GET] ALL
     @GetMapping("/ordemServicos")

@@ -4,8 +4,23 @@ package br.com.mecaniQA.api.mappers;
 
 import br.com.mecaniQA.api.DTO.OrdemServicoDTO;
 import br.com.mecaniQA.api.model.OrdemServico;
+import br.com.mecaniQA.api.model.enums.StatusOrdemServico;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class OrdemServicoMapper {
+    public static OrdemServico map(ResultSet rs) throws SQLException {
+        String status = rs.getString("status_ordem_servico");
+
+        OrdemServico ordem = OrdemServico.builder()
+                .status(status == null ? null : StatusOrdemServico.valueOf(status))
+                .build();
+
+        ordem.setId(rs.getLong("id_ordem_servico")); // ajuste para o nome real da coluna
+        return ordem;
+    }
+
     public static OrdemServico toEntity(OrdemServicoDTO dto){
         // Proteção contra NullPointer
         if (dto == null) return null;
