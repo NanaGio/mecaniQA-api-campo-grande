@@ -45,7 +45,7 @@ public class OrdemServicoRepository implements Repository<OrdemServico, Long> {
     //GET BY ID
     @Override
     public Optional<OrdemServico> findById(Long id) {
-        String sql = "SELECT * FROM tb_ordem_servico WHERE ordem_servico_id = ?";
+        String sql = "SELECT * FROM tb_ordem_servico WHERE id_ordem_servico = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
@@ -75,7 +75,7 @@ public class OrdemServicoRepository implements Repository<OrdemServico, Long> {
     // [PUT] US02 - Modificar o status da Ordem de Serviço
     @Override
     public OrdemServico update(OrdemServico entity) {
-        String sql = "UPDATE tb_ordem_servico SET status = ? WHERE ordem_servico_id = ?";
+        String sql = "UPDATE tb_ordem_servico SET status_ordem_servico = ? WHERE id_ordem_servico = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, entity.getStatus().name());
@@ -90,7 +90,7 @@ public class OrdemServicoRepository implements Repository<OrdemServico, Long> {
     // [DELETE] Remover uma Ordem de Serviço
     @Override
     public boolean deleteById(Long id) {
-        String sql = "DELETE FROM tb_ordem_servico WHERE ordem_servico_id = ?";
+        String sql = "DELETE FROM tb_ordem_servico WHERE id_ordem_servico = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
@@ -101,8 +101,15 @@ public class OrdemServicoRepository implements Repository<OrdemServico, Long> {
     }
 
     @Override
-    public boolean existsById(Long aLong) {
-        return false;
+    public boolean existsById(Long id) {
+        String sql = "SELECT 1 FROM tb_ordem_servico WHERE id_ordem_servico = ?";
+        try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, id);
+            try (ResultSet rs = ps.executeQuery()){
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao verificar pedido de peças " + id, e);
+        }
     }
-
 }

@@ -17,12 +17,12 @@ public class OrdemServicoMapper {
                 .status(status == null ? null : StatusOrdemServico.valueOf(status))
                 .build();
 
-        ordem.setId(rs.getLong("id_ordem_servico")); // ajuste para o nome real da coluna
+        ordem.setId(rs.getLong("id_ordem_servico"));
         return ordem;
     }
 
     public static OrdemServico toEntity(OrdemServicoDTO dto){
-        // Proteção contra NullPointer
+
         if (dto == null) return null;
         return OrdemServico.builder()
                  .id(dto.getId())
@@ -31,7 +31,7 @@ public class OrdemServicoMapper {
     }
 
     public static OrdemServicoDTO toDTO(OrdemServico entity) {
-        // Proteção contra NullPointer
+
         if (entity == null) return null;
 
         return new OrdemServicoDTO(
