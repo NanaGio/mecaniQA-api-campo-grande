@@ -91,4 +91,13 @@ public class PedidoPecasController {
 
         return ResponseEntity.ok(PedidoPecasMapper.toDTO(pedidoAtualizado));
     }
+
+    @DeleteMapping("/deletarPedido/{idPedido}")
+    public ResponseEntity<Void> deletarPedido(@PathVariable("idPedido") Long idPedido){
+        boolean removido = pedidoPecasService.deletarPedido(idPedido);
+        if (!removido){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
+    }
 }
