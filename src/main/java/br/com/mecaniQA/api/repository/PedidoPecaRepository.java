@@ -1,5 +1,7 @@
 package br.com.mecaniQA.api.repository;
 
+import br.com.mecaniQA.api.exception.DadosInvalidosException;
+import br.com.mecaniQA.api.exception.ErroPersistenciaException;
 import br.com.mecaniQA.api.mappers.PecaMapper;
 import br.com.mecaniQA.api.model.ItemPedido;
 import br.com.mecaniQA.api.model.PedidoPecas;
@@ -59,7 +61,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
                 throw e;
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao salvar pedido de peças.", e);
+            throw new ErroPersistenciaException("Erro ao salvar pedido de peças.", e);
         }
         return findById(pedido.getId()).orElse(pedido);
     }
@@ -73,7 +75,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             for (ItemPedido item : itens) {
         if (item == null || item.getPeca() == null || item.getPeca().getIdPeca() == null) {
-                    throw new IllegalArgumentException("Cada item do pedido deve referenciar uma peça.");
+                    throw new DadosInvalidosException("Cada item do pedido deve referenciar uma peça.");
                 }
                 ps.setLong(1, idPedido);
                 ps.setInt(2, item.getPeca().getIdPeca());
@@ -136,7 +138,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
         try (Connection conn = dataSource.getConnection()) {
             return readPedido(conn, id);
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar pedido de peças " + id, e);
+            throw new ErroPersistenciaException("Erro ao buscar pedido de peças " + id, e);
         }
     }
 
@@ -158,7 +160,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
             }
             return pedidos;
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao listar pedidos de peças.", e);
+            throw new ErroPersistenciaException("Erro ao listar pedidos de peças.", e);
         }
     }
 
@@ -191,14 +193,14 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
                 throw e;
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar pedido de peças " + pedido.getId(), e);
+            throw new ErroPersistenciaException("Erro ao atualizar pedido de peças " + pedido.getId(), e);
         }
         return findById(pedido.getId()).orElse(pedido);
     }
 
     public PedidoPecas addItemAoPedido(Long idPedido, ItemPedido item) {
                 if (item == null || item.getPeca() == null || item.getPeca().getIdPeca() == null) {
-            throw new IllegalArgumentException("O item deve referenciar uma peça.");
+            throw new DadosInvalidosException("O item deve referenciar uma peça.");
         }
         if (!existsById(idPedido)) {
             return null;
@@ -217,7 +219,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao adicionar item ao pedido " + idPedido, e);
+            throw new ErroPersistenciaException("Erro ao adicionar item ao pedido " + idPedido, e);
         }
         return findById(idPedido).orElse(null);
     }
@@ -231,7 +233,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
                 return null;
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar status do pedido " + idPedido, e);
+            throw new ErroPersistenciaException("Erro ao atualizar status do pedido " + idPedido, e);
         }
         return findById(idPedido).orElse(null);
     }
@@ -259,7 +261,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
                 throw e;
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao deletar pedido de peças " + id, e);
+            throw new ErroPersistenciaException("Erro ao deletar pedido de peças " + id, e);
         }
     }
 
@@ -272,7 +274,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
                 return rs.next();
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao verificar pedido de peças " + id, e);
+            throw new ErroPersistenciaException("Erro ao verificar pedido de peças " + id, e);
         }
     }
 }

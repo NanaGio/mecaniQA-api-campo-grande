@@ -1,4 +1,5 @@
 package br.com.mecaniQA.api.repository;
+import br.com.mecaniQA.api.exception.ErroPersistenciaException;
 import br.com.mecaniQA.api.mappers.PecaMapper;
 import br.com.mecaniQA.api.model.Peca;
 import org.springframework.stereotype.Component;
@@ -45,7 +46,7 @@ public class PecaRepository implements Repository<Peca, Integer>{
                 if (keys.next()) entity.setIdPeca(keys.getInt(1));
             }
         } catch (SQLException e){
-            throw new RuntimeException("Erro ao salvar.", e);
+            throw new ErroPersistenciaException("Erro ao salvar peça.", e);
         }
         return findById(entity.getIdPeca()).orElse(entity);
     }
@@ -60,7 +61,7 @@ public class PecaRepository implements Repository<Peca, Integer>{
                 return rs.next() ? Optional.of(PecaMapper.map(rs)) : Optional.empty();
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar peça " + id, e);
+            throw new ErroPersistenciaException("Erro ao buscar peça " + id, e);
         }
     }
 
@@ -75,7 +76,7 @@ public class PecaRepository implements Repository<Peca, Integer>{
             while (rs.next()) lista.add(PecaMapper.map(rs));
             return lista;
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao listar peças.", e);
+            throw new ErroPersistenciaException("Erro ao listar peças.", e);
         }
     }
 
@@ -87,7 +88,7 @@ public class PecaRepository implements Repository<Peca, Integer>{
             ps.setInt(9, entity.getIdPeca());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar peça.", e);
+            throw new ErroPersistenciaException("Erro ao atualizar peça.", e);
         }
         return findById(entity.getIdPeca()).orElse(entity);
     }
@@ -99,7 +100,7 @@ public class PecaRepository implements Repository<Peca, Integer>{
             ps.setInt(2, idPeca);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar preço de custo da peça " + idPeca, e);
+            throw new ErroPersistenciaException("Erro ao atualizar preço de custo da peça " + idPeca, e);
         }
     }
 
@@ -110,7 +111,7 @@ public class PecaRepository implements Repository<Peca, Integer>{
             ps.setInt(2, idPeca);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar preço de venda da peça " + idPeca, e);
+            throw new ErroPersistenciaException("Erro ao atualizar preço de venda da peça " + idPeca, e);
         }
     }
 
@@ -121,7 +122,7 @@ public class PecaRepository implements Repository<Peca, Integer>{
             ps.setInt(2, idPeca);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar quantidade em estoque da peça " + idPeca, e);
+            throw new ErroPersistenciaException("Erro ao atualizar quantidade em estoque da peça " + idPeca, e);
         }
     }
 
@@ -134,7 +135,7 @@ public class PecaRepository implements Repository<Peca, Integer>{
             int linhasAfetadas = ps.executeUpdate();
             return linhasAfetadas > 0;
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao deletar peça " + id, e);
+            throw new ErroPersistenciaException("Erro ao deletar peça " + id, e);
         }
     }
 
@@ -149,7 +150,7 @@ public class PecaRepository implements Repository<Peca, Integer>{
                 return rs.next();
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao verificar peça " + id, e);
+            throw new ErroPersistenciaException("Erro ao verificar peça " + id, e);
         }
     }
 }

@@ -2,6 +2,8 @@ package br.com.mecaniQA.api.service;
 
 import br.com.mecaniQA.api.model.Servico;
 import br.com.mecaniQA.api.repository.ServicoRepository;
+import br.com.mecaniQA.api.exception.DadosInvalidosException;
+import br.com.mecaniQA.api.exception.RecursoNaoEncontradoException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,7 +25,7 @@ public class ServicoService {
     //GET BY ID
     public Servico getServicoById(Integer idServico){
         return repository.findById(idServico)
-                .orElseThrow(() -> new RuntimeException("Serviço não encontrado."));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Serviço não encontrado."));
     }
     //POST
     public Servico salvarServico(Servico servico){
@@ -49,7 +51,7 @@ public class ServicoService {
     //DELETE
     public boolean deletarServico(Integer idServico){
         if (!repository.existsById(idServico)){
-            throw new RuntimeException("Serviço não econtrado.");
+            throw new RecursoNaoEncontradoException("Serviço não econtrado.");
         }
         return repository.deleteById(idServico);
     }
@@ -57,11 +59,11 @@ public class ServicoService {
     // -- VALIDAÇÕES CUSTOMIZADAS --
     private void validarServico(Servico servico) {
         if (servico == null) {
-            throw new RuntimeException("Dados do serviço não informados.");
+            throw new DadosInvalidosException("Dados do serviço não informados.");
         }
         if (servico.getNomeServico() == null || servico.getNomeServico().isBlank()
                 || servico.getNomeServico().length() > 30) {
-            throw new RuntimeException("Nome do serviço obrigatório, com até 30 caracteres.");
+            throw new DadosInvalidosException("Nome do serviço obrigatório, com até 30 caracteres.");
         }
         validarTempoEstimado(servico.getTempoEstimado());
         validarCustoTabelado(servico.getCustoTabelado());
@@ -69,13 +71,13 @@ public class ServicoService {
 
     private void validarTempoEstimado(Integer tempoEstimado) {
         if (tempoEstimado == null || tempoEstimado <= 0) {
-            throw new RuntimeException("O tempo estimado deve ser maior que zero.");
+            throw new DadosInvalidosException("O tempo estimado deve ser maior que zero.");
         }
     }
 
     private void validarCustoTabelado(BigDecimal custoTabelado) {
         if (custoTabelado == null || custoTabelado.compareTo(BigDecimal.ZERO) < 0) {
-            throw new RuntimeException("O custo tabelado deve ser maior ou igual a zero.");
+            throw new DadosInvalidosException("O custo tabelado deve ser maior ou igual a zero.");
         }
     }
 }

@@ -2,12 +2,13 @@ package br.com.mecaniQA.api.service;
 
 import br.com.mecaniQA.api.model.ItemPedido;
 import br.com.mecaniQA.api.model.PedidoPecas;
+import br.com.mecaniQA.api.exception.DadosInvalidosException;
+import br.com.mecaniQA.api.exception.RecursoNaoEncontradoException;
 import br.com.mecaniQA.api.model.enums.StatusPedidoPecas;
 import br.com.mecaniQA.api.repository.PedidoPecaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PedidoPecasService {
@@ -29,15 +30,16 @@ public class PedidoPecasService {
     }
 
     // GET BY ID
-    public Optional<PedidoPecas> getPedidoPecasById(Long id) {
+    public PedidoPecas getPedidoPecasById(Long id) {
         validarId(id);
-        return repository.findById(id);
+        return repository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Pedido não encontrado: " + id));
     }
 
     // US03 Criar um Pedido [POST /api/pedidos].
     public PedidoPecas adicionarPedido(PedidoPecas pedidoPecas) {
         if (pedidoPecas == null) {
-            throw new RuntimeException("Os dados do pedido são obrigatórios.");
+            throw new DadosInvalidosException("Os dados do pedido são obrigatórios.");
         }
         if (pedidoPecas.getStatus() == null) {
             pedidoPecas.setStatus(StatusPedidoPecas.ORCANDO);
@@ -56,7 +58,7 @@ public class PedidoPecasService {
         validarItem(itemPedido);
 
         if (!repository.existsById(idPedido)) {
-            throw new RuntimeException("Pedido não encontrado: " + idPedido);
+            throw new RecursoNaoEncontradoException("Pedido não encontrado: " + idPedido);
         }
         return repository.addItemAoPedido(idPedido, itemPedido);
     }
@@ -65,10 +67,10 @@ public class PedidoPecasService {
     public PedidoPecas modificarStatus(Long idPedido, StatusPedidoPecas novoStatus) {
         validarId(idPedido);
         if (novoStatus == null) {
-            throw new RuntimeException("O novo status do pedido é obrigatório.");
+            throw new DadosInvalidosException("O novo status do pedido é obrigatório.");
         }
         if (!repository.existsById(idPedido)) {
-            throw new RuntimeException("Pedido não encontrado: " + idPedido);
+            throw new RecursoNaoEncontradoException("Pedido não encontrado: " + idPedido);
         }
         return repository.updateStatus(idPedido, novoStatus);
     }
@@ -76,7 +78,7 @@ public class PedidoPecasService {
     public boolean deletarPedido(Long idPedido){
         validarId(idPedido);
         if (!repository.existsById(idPedido)){
-            throw new RuntimeException("Pedido não encontrado: " + idPedido);
+            throw new RecursoNaoEncontradoException("Pedido não encontrado: " + idPedido);
         }
         repository.deleteById(idPedido);
         return true;
@@ -86,19 +88,19 @@ public class PedidoPecasService {
 
     private void validarId(Long id) {
         if (id == null || id <= 0) {
-            throw new RuntimeException("O ID do pedido deve ser maior que zero.");
+            throw new DadosInvalidosException("O ID do pedido deve ser maior que zero.");
         }
     }
 
     private void validarItem(ItemPedido item) {
         if (item == null) {
-            throw new RuntimeException("Os dados do item são obrigatórios.");
+            throw new DadosInvalidosException("Os dados do item são obrigatórios.");
         }
         if (item.getQuantidade() <= 0) {
-            throw new RuntimeException("A quantidade da peça deve ser maior que zero.");
+            throw new DadosInvalidosException("A quantidade da peça deve ser maior que zero.");
         }
         if (item.getPeca() == null || item.getPeca().getIdPeca() == null) {
-            throw new RuntimeException("O item deve informar a peça (idPeca).");
+            throw new DadosInvalidosException("O item deve informar a peça (idPeca).");
         }
     }
 

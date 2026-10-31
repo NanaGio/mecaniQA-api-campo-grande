@@ -1,4 +1,5 @@
 package br.com.mecaniQA.api.repository;
+import br.com.mecaniQA.api.exception.ErroPersistenciaException;
 
 //Fontes de base: medium.com/@adityashete009/implementing-singleton-classes-in-java | devmedia.com.br/padrao-de-projeto-singleton-em-java | Singleton em Java (Lucas Herom) / Youtube
 
@@ -45,7 +46,7 @@ public class ServicoRepository implements  Repository<Servico, Integer>{
                 if (keys.next()) entity.setIdServico(keys.getInt(1));
             }
         } catch (SQLException e){
-            throw new RuntimeException("Erro ao salvar", e);
+            throw new ErroPersistenciaException("Erro ao salvar serviço.", e);
         }
         return findById(entity.getIdServico()).orElse(entity);
     }
@@ -59,7 +60,7 @@ public class ServicoRepository implements  Repository<Servico, Integer>{
                 return rs.next() ? Optional.of(ServicoMapper.map(rs)) : Optional.empty();
             }
         } catch (SQLException e) {
-            throw new RuntimeException("ID não encontrado", e);
+            throw new ErroPersistenciaException("Erro ao buscar serviço " + id, e);
         }
     }
 
@@ -71,7 +72,7 @@ public class ServicoRepository implements  Repository<Servico, Integer>{
             while (rs.next()) lista.add(ServicoMapper.map(rs));
             return lista;
         }catch (SQLException e){
-            throw new RuntimeException("Erro ao listar serviços.", e);
+            throw new ErroPersistenciaException("Erro ao listar serviços.", e);
         }
     }
 
@@ -84,7 +85,7 @@ public class ServicoRepository implements  Repository<Servico, Integer>{
             ps.setInt(3, entity.getIdServico());
             ps.executeUpdate();
         } catch (SQLException e){
-            throw new RuntimeException("Erro ao atualizar", e);
+            throw new ErroPersistenciaException("Erro ao atualizar serviço.", e);
         }
         return findById(entity.getIdServico()).orElse(entity);
     }
@@ -97,7 +98,7 @@ public class ServicoRepository implements  Repository<Servico, Integer>{
             int linhasAfetadas = ps.executeUpdate();
             return linhasAfetadas > 0;
         } catch (SQLException e){
-            throw new RuntimeException("Erro ao deletar serviço", e);
+            throw new ErroPersistenciaException("Erro ao deletar serviço " + id, e);
         }
     }
 
@@ -110,10 +111,9 @@ public class ServicoRepository implements  Repository<Servico, Integer>{
                 return rs.next();
             }
         } catch (SQLException e){
-            throw new RuntimeException("Serviço não econtrado", e);
+            throw new ErroPersistenciaException("Erro ao verificar serviço " + id, e);
         }
     }
     // Criando instância
 }
     //Outros métodos, get ou setters...
-

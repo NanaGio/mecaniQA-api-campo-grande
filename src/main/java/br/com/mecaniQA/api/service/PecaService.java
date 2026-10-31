@@ -1,6 +1,8 @@
 package br.com.mecaniQA.api.service;
 import br.com.mecaniQA.api.model.Peca;
 import br.com.mecaniQA.api.repository.PecaRepository;
+import br.com.mecaniQA.api.exception.DadosInvalidosException;
+import br.com.mecaniQA.api.exception.RecursoNaoEncontradoException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,11 +25,12 @@ public class PecaService {
     // GET BY ID
     public Peca getById(Integer idPeca){
         return repository.findById(idPeca)
-                .orElseThrow(() -> new RuntimeException("Peça não encontrada"));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Peça não encontrada"));
     }
 
     //POST
     public Peca salvarPeca(Peca peca){
+        validarPeca(peca);
         return repository.save(peca);
     }
 
@@ -52,7 +55,7 @@ public class PecaService {
     // PUT - quantidade em estoque
     public Peca updateQuantidade(Integer idPeca, Integer novaQuantidade) {
         if (novaQuantidade == null || novaQuantidade < 0) {
-            throw new RuntimeException("A quantidade em estoque não pode ser negativa.");
+            throw new DadosInvalidosException("A quantidade em estoque não pode ser negativa.");
         }
         getById(idPeca);
         repository.updateQuantidade(idPeca, novaQuantidade);
@@ -62,7 +65,7 @@ public class PecaService {
     //DELETE
     public boolean deletarPeca(Integer idPeca){
         if (!repository.existsById(idPeca)) {
-            throw new RuntimeException("Peça não encontrada");
+            throw new RecursoNaoEncontradoException("Peça não encontrada");
         }
         return repository.deleteById(idPeca);
     }
@@ -71,32 +74,32 @@ public class PecaService {
 
     private void validarPeca(Peca peca) {
         if (peca == null) {
-            throw new RuntimeException("Dados da peça não informados.");
+            throw new DadosInvalidosException("Dados da peça não informados.");
         }
         if (peca.getCodigoDeBarras() == null || peca.getCodigoDeBarras().isBlank()
                 || peca.getCodigoDeBarras().length() > 13) {
-            throw new RuntimeException("Código de barras obrigatório, com até 13 caracteres.");
+            throw new DadosInvalidosException("Código de barras obrigatório, com até 13 caracteres.");
         }
         if (peca.getFornecedor() == null || peca.getFornecedor().isBlank()
                 || peca.getFornecedor().length() > 30) {
-            throw new RuntimeException("Fornecedor obrigatório, com até 30 caracteres.");
+            throw new DadosInvalidosException("Fornecedor obrigatório, com até 30 caracteres.");
         }
         if (peca.getQuantidadeEstoque() == null || peca.getQuantidadeEstoque() < 0) {
-            throw new RuntimeException("A quantidade em estoque não pode ser negativa.");
+            throw new DadosInvalidosException("A quantidade em estoque não pode ser negativa.");
         }
         validarPreco(peca.getPrecoCusto(), "Preço de custo");
         validarPreco(peca.getPrecoVenda(), "Preço de venda");
         if (peca.getCategoriaPeca() == null) {
-            throw new RuntimeException("Categoria da peça obrigatória.");
+            throw new DadosInvalidosException("Categoria da peça obrigatória.");
         }
         if (peca.getCor() != null && peca.getCor().length() > 15) {
-            throw new RuntimeException("A cor deve ter até 15 caracteres.");
+            throw new DadosInvalidosException("A cor deve ter até 15 caracteres.");
         }
     }
 
     private void validarPreco(BigDecimal preco, String campo) {
         if (preco == null || preco.compareTo(BigDecimal.ZERO) < 0) {
-            throw new RuntimeException(campo + " inválido: deve ser maior ou igual a zero.");
+            throw new DadosInvalidosException(campo + " inválido: deve ser maior ou igual a zero.");
         }
     }
 

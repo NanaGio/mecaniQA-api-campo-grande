@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/pedidos")
@@ -39,10 +38,8 @@ public class PedidoPecasController {
     // GET BY ID
     @GetMapping("/{idPedido}")
     public ResponseEntity<PedidoPecasDTO> getPedidoById(@PathVariable("idPedido") Long idPedido) {
-        Optional<PedidoPecas> pedidoPecas = pedidoPecasService.getPedidoPecasById(idPedido);
-        return pedidoPecas
-                .map(pedido -> ResponseEntity.ok(PedidoPecasMapper.toDTO(pedido)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        PedidoPecas pedido = pedidoPecasService.getPedidoPecasById(idPedido);
+        return ResponseEntity.ok(PedidoPecasMapper.toDTO(pedido));
     }
 
     // [POST] US03 - Criar um novo Pedido de Peças

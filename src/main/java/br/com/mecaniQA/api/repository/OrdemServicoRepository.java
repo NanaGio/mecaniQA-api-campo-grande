@@ -1,5 +1,6 @@
 package br.com.mecaniQA.api.repository;
 
+import br.com.mecaniQA.api.exception.ErroPersistenciaException;
 import br.com.mecaniQA.api.mappers.OrdemServicoMapper;
 import br.com.mecaniQA.api.model.OrdemServico;
 import br.com.mecaniQA.api.model.enums.StatusOrdemServico;
@@ -37,7 +38,7 @@ public class OrdemServicoRepository implements Repository<OrdemServico, Long> {
                 entity.setId(keys.getLong(1));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao salvar ordem de serviço.", e);
+            throw new ErroPersistenciaException("Erro ao salvar ordem de serviço.", e);
         }
         return findById(entity.getId()).orElse(entity);
     }
@@ -53,7 +54,7 @@ public class OrdemServicoRepository implements Repository<OrdemServico, Long> {
                 return rs.next() ? Optional.of(OrdemServicoMapper.map(rs)) : Optional.empty();
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar ordem de serviço " + id, e);
+            throw new ErroPersistenciaException("Erro ao buscar ordem de serviço " + id, e);
         }
     }
 
@@ -68,7 +69,7 @@ public class OrdemServicoRepository implements Repository<OrdemServico, Long> {
             while (rs.next()) lista.add(OrdemServicoMapper.map(rs));
             return lista;
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao listar ordens de serviço.", e);
+            throw new ErroPersistenciaException("Erro ao listar ordens de serviço.", e);
         }
     }
 
@@ -82,7 +83,7 @@ public class OrdemServicoRepository implements Repository<OrdemServico, Long> {
             ps.setLong(2, entity.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar ordem de serviço.", e);
+            throw new ErroPersistenciaException("Erro ao atualizar ordem de serviço.", e);
         }
         return findById(entity.getId()).orElse(entity);
     }
@@ -96,7 +97,7 @@ public class OrdemServicoRepository implements Repository<OrdemServico, Long> {
             ps.setLong(1, id);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao deletar ordem de serviço " + id, e);
+            throw new ErroPersistenciaException("Erro ao deletar ordem de serviço " + id, e);
         }
     }
 
@@ -109,7 +110,7 @@ public class OrdemServicoRepository implements Repository<OrdemServico, Long> {
                 return rs.next();
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao verificar pedido de peças " + id, e);
+            throw new ErroPersistenciaException("Erro ao verificar ordem de serviço " + id, e);
         }
     }
 }

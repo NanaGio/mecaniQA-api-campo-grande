@@ -2,6 +2,9 @@ package br.com.mecaniQA.api.service;
 
 import br.com.mecaniQA.api.model.OrdemServico;
 import br.com.mecaniQA.api.model.enums.StatusOrdemServico;
+import br.com.mecaniQA.api.exception.DadosInvalidosException;
+import br.com.mecaniQA.api.exception.RecursoNaoEncontradoException;
+import br.com.mecaniQA.api.exception.RegraNegocioException;
 import br.com.mecaniQA.api.repository.OrdemServicoRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +26,7 @@ public class OrdemServicoService {
     public OrdemServico getOrdemServicoById(Long id) {
         validarId(id);
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException(
+                .orElseThrow(() -> new RecursoNaoEncontradoException(
                         "Ordem de serviço não encontrada: " + id));
     }
 
@@ -40,7 +43,7 @@ public class OrdemServicoService {
     public OrdemServico modificarOrdem (Long id, StatusOrdemServico novoStatus){
         validarId(id);
         if (novoStatus == null) {
-            throw new RuntimeException("O novo status da ordem de serviço é obrigatório.");
+            throw new DadosInvalidosException("O novo status da ordem de serviço é obrigatório.");
         }
         OrdemServico ordem = getOrdemServicoById(id);
         validarTransicao(ordem.getStatus(), novoStatus);
@@ -52,7 +55,7 @@ public class OrdemServicoService {
     public boolean deletarOrdem(Long id) {
         validarId(id);
         if (!repository.existsById(id)) {
-            throw new RuntimeException("Ordem de serviço não encontrada: " + id);
+            throw new RecursoNaoEncontradoException("Ordem de serviço não encontrada: " + id);
         }
         return repository.deleteById(id);
     }
@@ -61,24 +64,24 @@ public class OrdemServicoService {
 
     private void validarId(Long id) {
         if (id == null || id <= 0) {
-            throw new RuntimeException("O ID da ordem de serviço deve ser maior que zero.");
+            throw new DadosInvalidosException("O ID da ordem de serviço deve ser maior que zero.");
         }
     }
 
     private void validarOrdem(OrdemServico ordem) {
         if (ordem == null) {
-            throw new RuntimeException("Os dados da ordem de serviço são obrigatórios.");
+            throw new DadosInvalidosException("Os dados da ordem de serviço são obrigatórios.");
         }
         // Regra assumida: uma OS nova sempre começa como ABERTO
         if (ordem.getStatus() != null && ordem.getStatus() != StatusOrdemServico.ABERTO) {
-            throw new RuntimeException("Uma nova ordem de serviço deve iniciar com status ABERTO.");
+            throw new DadosInvalidosException("Uma nova ordem de serviço deve iniciar com status ABERTO.");
         }
     }
 
     private void validarTransicao(StatusOrdemServico atual, StatusOrdemServico novo) {
         // Regra assumida: EXECUTADO é um estado final
         if (atual == StatusOrdemServico.EXECUTADO) {
-            throw new RuntimeException(
+            throw new RegraNegocioException(
                     "Ordem de serviço já executada: o status não pode mais ser alterado.");
         }
     }
