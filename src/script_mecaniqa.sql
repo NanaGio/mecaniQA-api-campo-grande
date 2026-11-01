@@ -1,49 +1,80 @@
-create database if not exists MECANIQA;
+-- =====================================================================
+-- MecâniQA - OAT 3 - Script do banco de dados (DDL)
+-- Banco: mecaniqa (MySQL 8)
+-- Ordem: tabelas sem dependência primeiro, tabelas com chave estrangeira depois
+-- =====================================================================
 
-use MECANIQA;
+CREATE DATABASE IF NOT EXISTS mecaniqa;
+USE mecaniqa;
 
-create table if not exists tb_peca(
-    peca_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    cod_barras varchar(13),
-    fornecedor varchar(30),
-    quant_estoque int,
-    preco_custo decimal,
-    preco_venda decimal,
-    data_cadastro datetime not null default current_timestamp,
-    tamanho decimal,
-    cor varchar(15),
-    categoria_peca ENUM('MOTOR','SUSPENSAO','FREIOS','ELETRICA','ACESSORIOS'),
-    data_ultima_atualizacao datetime not null default current_timestamp on update current_timestamp
+-- Para recriar tudo do zero (APAGA OS DADOS), descomente as linhas abaixo:
+-- DROP TABLE IF EXISTS tb_idem_pedido;
+-- DROP TABLE IF EXISTS tb_pedido_pecas;
+-- DROP TABLE IF EXISTS tb_ordem_servico;
+-- DROP TABLE IF EXISTS tb_servico;
+-- DROP TABLE IF EXISTS tb_peca;
+
+-- ---------------------------------------------------------------------
+-- Peça
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS tb_peca (
+    peca_id                 INT          NOT NULL AUTO_INCREMENT,
+    cod_barras              VARCHAR(13),
+    fornecedor              VARCHAR(30),
+    quant_estoque           INT,
+    preco_custo             DECIMAL(10,2),
+    preco_venda             DECIMAL(10,2),
+    data_cadastro           DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    tamanho                 FLOAT,
+    cor                     VARCHAR(15),
+    categoria_peca          ENUM('MOTOR','SUSPENSAO','FREIOS','ELETRICA','ACESSORIOS'),
+    data_ultima_atualizacao DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (peca_id)
     );
 
-ALTER TABLE tb_peca MODIFY peca_id INT NOT NULL AUTO_INCREMENT;
-
-create table if not exists tb_servico(
-    servico_id int PRIMARY KEY,
-    nome_servico VARCHAR(30),
-    tempo_estimado int,
-    custo_tabelado decimal,
-    data_criacao datetime not null default current_timestamp,
-    data_ultima_atualizacao datetime not null default current_timestamp on update current_timestamp
+-- ---------------------------------------------------------------------
+-- Serviço
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS tb_servico (
+    servico_id              INT NOT NULL AUTO_INCREMENT,
+    nome_servico            VARCHAR(30),
+    tempo_estimado          INT,
+    custo_tabelado          DECIMAL(10,2),
+    data_criacao            DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_ultima_atualizacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (servico_id)
     );
 
-create table if not exists tb_pedido_pecas (
-    id_pedido_pecas int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    peca_id int,
-    FOREIGN KEY (peca_id) references tb_peca(peca_id),
-    status_pedido_pecas ENUM('ORCANDO','PENDENTE_PAGAMENTO','PAGO','ENTREGUE')
+-- ---------------------------------------------------------------------
+-- Ordem de serviço
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS tb_ordem_servico (
+    id_ordem_servico     INT NOT NULL AUTO_INCREMENT,
+    status_ordem_servico ENUM('ABERTO','PENDENTE_PAGAMENTO','PAGO','EM_EXECUCAO','EXECUTADO'),
+    PRIMARY KEY (id_ordem_servico)
     );
 
-create table if not exists tb_idem_pedido (
-    id_item_pedido int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_pedido_pecas int NOT NULL,
-    peca_id int,
-    FOREIGN KEY (id_pedido_pecas) references tb_pedido_pecas(id_pedido_pecas) ON DELETE CASCADE,
-    FOREIGN KEY (peca_id) references tb_peca(peca_id),
-    quantidade int
+-- ---------------------------------------------------------------------
+-- Pedido de peças
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS tb_pedido_pecas (
+    id_pedido_pecas     INT NOT NULL AUTO_INCREMENT,
+    peca_id             INT,
+    status_pedido_pecas ENUM('ORCANDO','PENDENTE_PAGAMENTO','PAGO','ENTREGUE'),
+    PRIMARY KEY (id_pedido_pecas),
+    CONSTRAINT tb_pedido_pecas_ibfk_1 FOREIGN KEY (peca_id) REFERENCES tb_peca (peca_id)
     );
 
-create table if not exists tb_ordem_servico (
-     id_ordem_servico int PRIMARY KEY,
-     status_ordem_servico ENUM('ORCANDO','PENDENTE_PAGAMENTO','PAGO','ENTREGUE')
+-- ---------------------------------------------------------------------
+-- Itens do pedido (relação 1:N com tb_pedido_pecas)
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS tb_idem_pedido (
+    id_item_pedido  INT NOT NULL AUTO_INCREMENT,
+    peca_id         INT,
+    quantidade      INT,
+    id_pedido_pecas INT NOT NULL,
+    PRIMARY KEY (id_item_pedido),
+    CONSTRAINT tb_idem_pedido_ibfk_1  FOREIGN KEY (peca_id) REFERENCES tb_peca (peca_id),
+    CONSTRAINT fk_item_pedido_pedido  FOREIGN KEY (id_pedido_pecas) REFERENCES tb_pedido_pecas (id_pedido_pecas)
+    ON DELETE CASCADE
     );
