@@ -7,6 +7,36 @@
   },
   "item": [
     {
+      "name": "POST PEÇA",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n        \"categoriaPeca\": \"MOTOR\",\r\n        \"codigoDeBarras\": \"9896543210123\",\r\n        \"cor\": \"Rosa\",\r\n        \"fornecedor\": \"Tinashe - Nasty Peças\",\r\n        \"precoCusto\": 300.00,\r\n        \"precoVenda\": 65.90,\r\n        \"quantidadeEstoque\": 90,\r\n        \"tamanho\": 6.4\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/peca/salvarPeca",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "peca",
+            "salvarPeca"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "GET ALL PEÇAS",
       "request": {
         "method": "GET",
@@ -33,7 +63,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:8081/api/peca/9",
+          "raw": "http://localhost:8081/api/peca/3",
           "protocol": "http",
           "host": [
             "localhost"
@@ -42,37 +72,7 @@
           "path": [
             "api",
             "peca",
-            "9"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "POST PEÇA",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n        \"categoriaPeca\": \"FREIOS\",\r\n        \"codigoDeBarras\": \"7891234567898\",\r\n        \"cor\": \"Azul\",\r\n        \"dataCadastro\": \"2026-08-27T01:55:00\",\r\n        \"fornecedor\": \"Zara Larsson Peças\",\r\n        \"idPeca\": 9,\r\n        \"precoCusto\": 100.00,\r\n        \"precoVenda\": 50.90,\r\n        \"quantidadeEstoque\": 10,\r\n        \"tamanho\": 5.5\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8081/api/peca/salvarPeca",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8081",
-          "path": [
-            "api",
-            "peca",
-            "salvarPeca"
+            "3"
           ]
         }
       },
@@ -85,7 +85,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "8.00",
+          "raw": "90",
           "options": {
             "raw": {
               "language": "json"
@@ -93,7 +93,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8081/api/peca/updatePrecoCusto/9",
+          "raw": "http://localhost:8081/api/peca/updatePrecoCusto/8",
           "protocol": "http",
           "host": [
             "localhost"
@@ -103,7 +103,7 @@
             "api",
             "peca",
             "updatePrecoCusto",
-            "9"
+            "8"
           ]
         }
       },
@@ -116,7 +116,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "11.00",
+          "raw": "10",
           "options": {
             "raw": {
               "language": "json"
@@ -124,7 +124,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8081/api/peca/updatePrecoCusto/9",
+          "raw": "http://localhost:8081/api/peca/updatePrecoCusto/5",
           "protocol": "http",
           "host": [
             "localhost"
@@ -134,7 +134,7 @@
             "api",
             "peca",
             "updatePrecoCusto",
-            "9"
+            "5"
           ]
         }
       },
@@ -146,7 +146,7 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://localhost:8081/api/peca/deletarPeca/9",
+          "raw": "http://localhost:8081/api/peca/deletarPeca/3",
           "protocol": "http",
           "host": [
             "localhost"
@@ -156,7 +156,7 @@
             "api",
             "peca",
             "deletarPeca",
-            "9"
+            "3"
           ]
         }
       },
@@ -189,7 +189,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:8081/api/servico/1",
+          "raw": "http://localhost:8081/api/servico/3",
           "protocol": "http",
           "host": [
             "localhost"
@@ -198,7 +198,7 @@
           "path": [
             "api",
             "servico",
-            "1"
+            "3"
           ]
         }
       },
@@ -211,7 +211,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"nomeServico\": \"Rodas muito legais muito maneiras\",\r\n  \"dataCriacao\": \"2026-08-27T02:11:00\",\r\n  \"tempoEstimado\": 60,\r\n  \"custoTabelado\": 100.00\r\n}",
+          "raw": "{\r\n  \"nomeServico\": \"Troca de motor\",\r\n  \"tempoEstimado\": 60,\r\n  \"custoTabelado\": 900.00\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -249,7 +249,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8081/api/servico/updateCustoTabelado/1",
+          "raw": "http://localhost:8081/api/servico/updateCustoTabelado/3",
           "protocol": "http",
           "host": [
             "localhost"
@@ -259,7 +259,7 @@
             "api",
             "servico",
             "updateCustoTabelado",
-            "1"
+            "3"
           ]
         }
       },
@@ -272,7 +272,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "1.00",
+          "raw": "20",
           "options": {
             "raw": {
               "language": "json"
@@ -280,7 +280,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8081/api/servico/updateCustoTabelado/1",
+          "raw": "http://localhost:8081/api/servico/updateTempoEstimado/3",
           "protocol": "http",
           "host": [
             "localhost"
@@ -289,8 +289,8 @@
           "path": [
             "api",
             "servico",
-            "updateCustoTabelado",
-            "1"
+            "updateTempoEstimado",
+            "3"
           ]
         }
       },
@@ -302,7 +302,7 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://localhost:8081/api/servico/deletarServico/1",
+          "raw": "http://localhost:8081/api/servico/deletarServico/3",
           "protocol": "http",
           "host": [
             "localhost"
@@ -312,6 +312,296 @@
             "api",
             "servico",
             "deletarServico",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST PEDIDO PEÇA",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"status\": \"ORCANDO\",\r\n  \"itens\": [\r\n    {\r\n      \"peca\": { \"idPeca\": 4 },\r\n      \"quantidade\": 2\r\n    },\r\n    {\r\n      \"peca\": { \"idPeca\": 3 },\r\n      \"quantidade\": 1\r\n    }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/pedidos/salvarPedido",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "pedidos",
+            "salvarPedido"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET PEDIDOS",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/pedidos/pedidos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "pedidos",
+            "pedidos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET PEDIDO PEÇAS BY ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT STATUS PEDIDO PEÇAS",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\"PAGO\"",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/pedidos/7/status",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "pedidos",
+            "7",
+            "status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE PEDIDOS",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\"PAGO\"",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/pedidos/deletarPedido/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "pedidos",
+            "deletarPedido",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST NOVO ITEM EM PEDIDO",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"peca\": {\r\n    \"idPeca\": 3\r\n  },\r\n  \"quantidade\": 2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/pedidos/7/item",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "pedidos",
+            "7",
+            "item"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST ORDEM SERVIÇO",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"status\": \"ABERTO\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/ordemservico/salvarOrdemServico",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "ordemservico",
+            "salvarOrdemServico"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET ORDEM SERVIÇOS",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/ordemservico/ordemServicos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "ordemservico",
+            "ordemServicos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ORDEM SERVIÇO BY ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/ordemservico/ordemServico/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "ordemservico",
+            "ordemServico",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT ORDEM SERVIÇO",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\"EM_EXECUCAO\"",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/ordemservico/updateOrdemServico/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "ordemservico",
+            "updateOrdemServico",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE ORDEM SERVIÇO",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/ordemservico/deleteOrdemServico/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "ordemservico",
+            "deleteOrdemServico",
             "1"
           ]
         }
