@@ -71,7 +71,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
             return;
         }
 
-        String sql = "INSERT INTO tb_idem_pedido (id_pedido_pecas, peca_id, quantidade) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO tb_item_pedido (id_pedido_pecas, peca_id, quantidade) VALUES (?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             for (ItemPedido item : itens) {
         if (item == null || item.getPeca() == null || item.getPeca().getIdPeca() == null) {
@@ -111,7 +111,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
 
     private List<ItemPedido> readItems(Connection conn, long idPedido) throws SQLException {
         String sql = "SELECT ip.id_item_pedido, ip.quantidade, p.* " +
-                "FROM tb_idem_pedido ip JOIN tb_peca p ON p.peca_id = ip.peca_id " +
+                "FROM tb_item_pedido ip JOIN tb_peca p ON p.peca_id = ip.peca_id " +
                 "WHERE ip.id_pedido_pecas = ? ORDER BY ip.id_item_pedido";
         List<ItemPedido> itens = new ArrayList<>();
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -182,7 +182,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
                 }
 
                 try (PreparedStatement ps = conn.prepareStatement(
-                        "DELETE FROM tb_idem_pedido WHERE id_pedido_pecas = ?")) {
+                        "DELETE FROM tb_item_pedido WHERE id_pedido_pecas = ?")) {
                     ps.setLong(1, pedido.getId());
                     ps.executeUpdate();
                 }
@@ -206,7 +206,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
             return null;
         }
 
-        String sql = "INSERT INTO tb_idem_pedido (id_pedido_pecas, peca_id, quantidade) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO tb_item_pedido (id_pedido_pecas, peca_id, quantidade) VALUES (?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setLong(1, idPedido);
@@ -244,7 +244,7 @@ public class PedidoPecaRepository implements Repository<PedidoPecas, Long> {
             conn.setAutoCommit(false);
             try {
                 try (PreparedStatement ps = conn.prepareStatement(
-                        "DELETE FROM tb_idem_pedido WHERE id_pedido_pecas = ?")) {
+                        "DELETE FROM tb_item_pedido WHERE id_pedido_pecas = ?")) {
                     ps.setLong(1, id);
                     ps.executeUpdate();
                 }

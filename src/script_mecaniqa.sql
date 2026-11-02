@@ -8,7 +8,7 @@ CREATE DATABASE IF NOT EXISTS mecaniqa;
 USE mecaniqa;
 
 -- Para recriar tudo do zero (APAGA OS DADOS), descomente as linhas abaixo:
--- DROP TABLE IF EXISTS tb_idem_pedido;
+-- DROP TABLE IF EXISTS tb_item_pedido;
 -- DROP TABLE IF EXISTS tb_pedido_pecas;
 -- DROP TABLE IF EXISTS tb_ordem_servico;
 -- DROP TABLE IF EXISTS tb_servico;
@@ -68,13 +68,13 @@ CREATE TABLE IF NOT EXISTS tb_pedido_pecas (
 -- ---------------------------------------------------------------------
 -- Itens do pedido (relação 1:N com tb_pedido_pecas)
 -- ---------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS tb_idem_pedido (
+CREATE TABLE IF NOT EXISTS tb_item_pedido (
     id_item_pedido  INT NOT NULL AUTO_INCREMENT,
     peca_id         INT,
     quantidade      INT,
     id_pedido_pecas INT NOT NULL,
     PRIMARY KEY (id_item_pedido),
-    CONSTRAINT tb_idem_pedido_ibfk_1  FOREIGN KEY (peca_id) REFERENCES tb_peca (peca_id),
+    CONSTRAINT tb_item_pedido_ibfk_1  FOREIGN KEY (peca_id) REFERENCES tb_peca (peca_id),
     CONSTRAINT fk_item_pedido_pedido  FOREIGN KEY (id_pedido_pecas) REFERENCES tb_pedido_pecas (id_pedido_pecas)
     ON DELETE CASCADE
     );
